@@ -8,7 +8,7 @@ Autori
 
 Nazev tymu
 - xrecmaa00 Aleš Recman 
-- xlogin02 jmeno prijmeni 
+- xturcam00 Martin Turčan 
 - xlogin03 jmeno prijmeni 
 - xlogin04 jmeno prijmeni 
 
