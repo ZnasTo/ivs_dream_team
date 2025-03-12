@@ -1,0 +1,24 @@
+Tento soubor bude obsahovat:
+
+Termíny:
+    17.3. testy
+    23.3. +,-,*,/ (matematická knihovna)
+    30.3. GUI zaklad
+    31.3. matematická knihovna (hotová)
+    2.4. makefile
+    6.4. profiling
+    13.4. GUI - komplet
+    16.4. instalace
+    19.4. napoveda
+    20.4. navod k instalaci, dokumentace
+    27.4. odevzdani
+
+Rozdělení práce:
+- xrecmaa00 100 (profiling, instalace, navod (od)instalace) 
+- xkovacj00 100 (GUI, napoveda)
+- xturcam00 100 (matemactika knihovna, makefile)
+- xkubisa00 100 (testy, dokumentace)
+
+Komunikační kanály: Discord, kuchyňka na purkyňích 
+
+Verzovací systém: GIT - github 
