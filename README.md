@@ -15,4 +15,6 @@ Nazev tymu
 Licence
 -------
 
+- toto je len test
+
 Tento program je poskytovan...
