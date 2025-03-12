@@ -8,9 +8,9 @@ Autori
 
 Nazev tymu
 - xrecmaa00 Aleš Recman 
-- xkovacj00 Jakub Kovacik 
+- xkubisa00 Aleš Kubiš 
 - xlogin03 jmeno prijmeni 
-- xlogin04 jmeno prijmeni 
+- xkovacj00 Jakub Kováčik
 
 Licence
 -------
