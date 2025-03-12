@@ -9,7 +9,7 @@ Autori
 Nazev tymu
 - xrecmaa00 Aleš Recman 
 - xlogin02 jmeno prijmeni 
-- xlogin03 jmeno prijmeni 
+- xturcam00 Martin Turčan 
 - xlogin04 jmeno prijmeni 
 
 Licence
