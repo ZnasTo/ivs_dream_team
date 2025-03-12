@@ -10,7 +10,7 @@ Nazev tymu
 - xrecmaa00 Aleš Recman 
 - xkovacj00 Jakub Kováčik
 - xturcam00 Martin Turčan 
-- xlogin04 jmeno prijmeni 
+- xkubisa00 Aleš Kubiš 
 
 Licence
 -------
