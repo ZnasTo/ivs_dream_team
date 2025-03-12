@@ -13,6 +13,10 @@ Termíny:
     20.4. navod k instalaci, dokumentace
     27.4. odevzdani
 
+Porady:
+    2.4. takticka porada
+    27.4. finalni porada
+
 Rozdělení práce:
 - xrecmaa00 100 (profiling, instalace, navod (od)instalace) 
 - xkovacj00 100 (GUI, napoveda)
@@ -21,4 +25,4 @@ Rozdělení práce:
 
 Komunikační kanály: Discord, kuchyňka na purkyňích 
 
-Verzovací systém: GIT - github 
+Verzovací systém: GIT - github - Přidali jsme ivs.kontrola@gmail.com jako kontributora
