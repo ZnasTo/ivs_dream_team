@@ -158,6 +158,36 @@ class TestMathLib(unittest.TestCase):
         math_module = importlib.import_module(module_name)
         result = math_module.multiplication(-10, -20)     #the name of the function has to corespond with name here "multiplication"
         self.assertEqual(result, 200)
+
+    def test_multiplication_6(self):
+        module_name = "math_lib"                 #the name of the math library has to corespond with name here "math_lib"
+        math_module = importlib.import_module(module_name)
+        result = math_module.multiplication(10, 1.5)     #the name of the function has to corespond with name here "multiplication"
+        self.assertEqual(result, 15)
+
+    def test_multiplication_7(self):
+        module_name = "math_lib"                 #the name of the math library has to corespond with name here "math_lib"
+        math_module = importlib.import_module(module_name)
+        result = math_module.multiplication(5.4, 2.7)     #the name of the function has to corespond with name here "multiplication"
+        self.assertEqual(result, 14.58)
+
+    def test_multiplication_8(self):
+        module_name = "math_lib"                 #the name of the math library has to corespond with name here "math_lib"
+        math_module = importlib.import_module(module_name)
+        result = math_module.multiplication(10, 0.7)     #the name of the function has to corespond with name here "multiplication"
+        self.assertEqual(result, 7)
+
+    def test_multiplication_9(self):
+        module_name = "math_lib"                 #the name of the math library has to corespond with name here "math_lib"
+        math_module = importlib.import_module(module_name)
+        result = math_module.multiplication(-100, 2.5)     #the name of the function has to corespond with name here "multiplication"
+        self.assertEqual(result, -250)
+
+    def test_multiplication_10(self):
+        module_name = "math_lib"                 #the name of the math library has to corespond with name here "math_lib"
+        math_module = importlib.import_module(module_name)
+        result = math_module.multiplication(-12.48, -0)     #the name of the function has to corespond with name here "multiplication"
+        self.assertEqual(result, 0)
 #############################################################################################################################
     def test_division_1(self):
         module_name = "math_lib"                 #the name of the math library has to corespond with name here "math_lib"
@@ -168,7 +198,7 @@ class TestMathLib(unittest.TestCase):
     def test_division_2(self):
         module_name = "math_lib"                 #the name of the math library has to corespond with name here "math_lib"
         math_module = importlib.import_module(module_name)
-        result = math_module.division(5, 1)     #the name of the function has to corespond with name here "division"
+        result = math_module.division(5, 1)     #the name of the function has to corespond with name here "division", 5 = dividend, 1 = divisor
         self.assertEqual(result, 5)
 
     def test_division_3(self):
@@ -189,10 +219,46 @@ class TestMathLib(unittest.TestCase):
         result = math_module.division(-25, -5)     #the name of the function has to corespond with name here "division"
         self.assertEqual(result, 5)
 
-    def test_division_error(self):
+    def test_division_6(self):
+        module_name = "math_lib"                 #the name of the math library has to corespond with name here "math_lib"
+        math_module = importlib.import_module(module_name)
+        result = math_module.division(10.5, 2)     #the name of the function has to corespond with name here "division"
+        self.assertEqual(result, 5.25)
+
+    def test_division_7(self):
+        module_name = "math_lib"                 #the name of the math library has to corespond with name here "math_lib"
+        math_module = importlib.import_module(module_name)
+        result = math_module.division(22, 2.2)     #the name of the function has to corespond with name here "division"
+        self.assertEqual(result, 10)
+
+    def test_division_8(self):
+        module_name = "math_lib"                 #the name of the math library has to corespond with name here "math_lib"
+        math_module = importlib.import_module(module_name)
+        result = math_module.division(10, 8)     #the name of the function has to corespond with name here "division"
+        self.assertEqual(result, 1.25)
+
+    def test_division_9(self):
+        module_name = "math_lib"                 #the name of the math library has to corespond with name here "math_lib"
+        math_module = importlib.import_module(module_name)
+        result = math_module.division(16.5, 2.5)     #the name of the function has to corespond with name here "division"
+        self.assertEqual(result, 6.6)
+
+    def test_division_10(self):
+        module_name = "math_lib"                 #the name of the math library has to corespond with name here "math_lib"
+        math_module = importlib.import_module(module_name)
+        result = math_module.division(-10500, -2.795)     #the name of the function has to corespond with name here "division"
+        self.assertEqual(result, 3756.70841)
+
+    def test_division_error_1(self):
         module_name = "math_lib"                 #the name of the math library has to corespond with name here "math_lib"
         math_module = importlib.import_module(module_name)
         result = math_module.division(8, 0)     #the name of the function has to corespond with name here "division"
+        self.assertEqual(result, "error")       #add error name
+
+    def test_division_error_2(self):
+        module_name = "math_lib"                 #the name of the math library has to corespond with name here "math_lib"
+        math_module = importlib.import_module(module_name)
+        result = math_module.division(8, -0)     #the name of the function has to corespond with name here "division"
         self.assertEqual(result, "error")       #add error name
 #############################################################################################################################    
     def test_factorial_1(self):
@@ -266,6 +332,18 @@ class TestMathLib(unittest.TestCase):
         math_module = importlib.import_module(module_name)
         result = math_module.expon(111, 15)        #the first argument is number, second is exponent: 111^15
         self.assertEqual(result, 0)                 #result should be  4.7845894883377 E+30, need to discuss how are we going to display this
+
+    def test_expon_8(self):
+        module_name = "math_lib"
+        math_module = importlib.import_module(module_name)
+        result = math_module.expon(2.2, 2)        #the first argument is number, second is exponent: 15^10
+        self.assertEqual(result, 4.84)
+
+    def test_expon_9(self):
+        module_name = "math_lib"
+        math_module = importlib.import_module(module_name)
+        result = math_module.expon(14.65, 3)        #the first argument is number, second is exponent: 15^10
+        self.assertEqual(result, 3144.219625)
 #############################################################################################################################
     def test_root_1(self):
         module_name = "math_lib"
@@ -296,6 +374,12 @@ class TestMathLib(unittest.TestCase):
         math_module = importlib.import_module(module_name)
         result = math_module.expon(8000000, 3)        #the first argument is number, second is root
         self.assertEqual(result, 200)
+
+    def test_root_6(self):
+        module_name = "math_lib"
+        math_module = importlib.import_module(module_name)
+        result = math_module.expon(2.5, 2)        #the first argument is number, second is root
+        self.assertEqual(result, 1.58114)
 
     def test_root_error_1(self):
         module_name = "math_lib"
@@ -356,6 +440,12 @@ class TestMathLib(unittest.TestCase):
         math_module = importlib.import_module(module_name)
         result = math_module.ln(150000)              #the name of the function has to corespond with name here "ln"
         self.assertEqual(result, 11.91839)
+
+    def test_ln_5(self):
+        module_name = "math_lab"
+        math_module = importlib.import_module(module_name)
+        result = math_module.ln(8.4)              #the name of the function has to corespond with name here "ln"
+        self.assertEqual(result, 2.12823)
 
     def test_ln_error_1(self):
         module_name = "math_lab"
