@@ -1,13 +1,11 @@
-
 import sys, re, math_lib
 
 ##
-# @brief the main fucion 
+# @brief reads the nubmers from stdin, and prints their standard deviation
 #
 def profiling():
     nums:list[float] = readNumbers()
     print(standardDeviation(nums))
-    
     
 
 ##
@@ -24,6 +22,8 @@ def readNumbers():
 ##
 # @brief sums the input numbers
 #
+# @param nums numbers for which the sum is calculated
+#
 # @return the sum of input numbers
 def sum(nums):
     sum = 0
@@ -34,18 +34,25 @@ def sum(nums):
 
 
 ##
-# @brief computes the x with strip in the standard deviation formula
+# @brief calculates the x with strip in the standard deviation formula
+#
+# @param nums numbers for which the sWithStrip is calculated
 #
 # @return x with strip in the standard deviation formula
-def computeXWithStrip(nums):
+def calculateXWithStrip(nums):
     numSum = sum(nums)
     inverseN = math_lib.division(1, len(nums))
     return math_lib.multiplication(inverseN, numSum)
 
-
+##
+# @brief calculates the standard diviation based on the formula in the specification
+#
+# @param nums numbers for which the standard deviation is calculated
+#
+# @return the standard deviation for numbers provided
 def standardDeviation(nums):
     # computing the parenthesis in the formula
-    xWithStrip = computeXWithStrip(nums)
+    xWithStrip = calculateXWithStrip(nums)
     xWithStripSquared = math_lib.expon(xWithStrip, 2)
 
     numsSquared = [math_lib.expon(num, 2) for num in nums] 
@@ -60,7 +67,6 @@ def standardDeviation(nums):
 
     # returning the square root
     return math_lib.root(numUnderSqrt,2)
-
 
 
 if __name__ == "__main__":
