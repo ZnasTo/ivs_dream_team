@@ -6,12 +6,8 @@ import sys, re, math_lib
 #
 def profiling():
     nums:list[float] = readNumbers()
-    standardDeviation(nums)
+    print(standardDeviation(nums))
     
-    
-    
-    
-
     
 
 ##
@@ -47,15 +43,25 @@ def computeXWithStrip(nums):
     return math_lib.multiplication(inverseN, numSum)
 
 
-
-def standardDeviation(numbs):
-    # computing the second part of the formula
-    xWithStrip = computeXWithStrip(numbs)
+def standardDeviation(nums):
+    # computing the parenthesis in the formula
+    xWithStrip = computeXWithStrip(nums)
     xWithStripSquared = math_lib.expon(xWithStrip, 2)
 
-    numsSquared = [math_lib.expon(num, 2) for num in numbs] 
+    numsSquared = [math_lib.expon(num, 2) for num in nums] 
     sumOfnumsSquared = sum(numsSquared)
-    print(numsSquared)
+    
+    parenthesis = math_lib.subtraction(sumOfnumsSquared, math_lib.multiplication(xWithStripSquared,len(nums)))
+
+    # multiplying the parenthesis by 1 over n - 1, where N is the number of elements
+    oneOverNMinusOne = math_lib.division(1,math_lib.subtraction(len(nums), 1))
+
+    numUnderSqrt = math_lib.multiplication(oneOverNMinusOne, parenthesis)
+
+    # returning the square root
+    return math_lib.root(numUnderSqrt,2)
+
+
 
 if __name__ == "__main__":
     profiling()
