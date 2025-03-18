@@ -28,9 +28,6 @@
 *.out
 *.app
 
-# Testing data for profiling
-data.txt
-
 # Ignore all files in profiling except, . pdf
-./profiling/*
-!./profiling/*.pdf
+/profiling/*
+!/profiling/*.pdf
