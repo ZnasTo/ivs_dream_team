@@ -85,13 +85,17 @@ def root(x,n):
     else:
         return x ** (1/n)
     
-#def ln(x):
-#    if x <= 0:
- #       return "Error!"
-  #  elif x == 1:
-   #     return 0
-    #else:
-
+##
+# @brief Function will absolut value from number
+# @param x Number 
+# @return Absolut value of x
+# 
+def abs(x):
+    if x >= 0:
+        return x
+    else:
+        return x*(-1)
+ 
 
 
     
