@@ -29,7 +29,7 @@ def subtraction(x,y):
 # @return Product of x and y
 #
 def multiplication(x,y):
-    return x*y
+    return round(x*y,5)
 
 
 ##
@@ -40,9 +40,9 @@ def multiplication(x,y):
 #
 def division(x,y):
     if y == 0:
-        return "Error! Division by zero"
+        return "Error!"
     else:
-        return x/y
+        return round(x/y,5)
 
 
 ##
@@ -51,7 +51,11 @@ def division(x,y):
 # @return Factorial of x
 #
 def factorial(x):
-    if x == 0:
+    if x < 0:
+        return "Error!"
+    elif x == 0:
+        return 1
+    elif x == 1:
         return 1
     else:
         return x * factorial(x-1)
@@ -64,10 +68,12 @@ def factorial(x):
 # @return Aplified number
 # 
 def expon(x, exponent):
-    if not isinstance(exponent, int) or exponent <=0:
+    if not isinstance(exponent, int) or exponent <0:
         return "Error!"
+    elif x == 0:
+        return 1
     else:
-        return x ** exponent
+        return round(x ** exponent,5)
 
 ##
 # @brief Function will do n-root of a number
@@ -83,7 +89,7 @@ def root(x,n):
     elif n == 1:
         return "Error!"
     else:
-        return x ** (1/n)
+        return round (x ** (1/n),5)
     
 ##
 # @brief Function will absolut value from number
@@ -96,6 +102,5 @@ def abs(x):
     else:
         return x*(-1)
  
-
 
     
