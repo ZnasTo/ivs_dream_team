@@ -84,9 +84,7 @@ def expon(x, exponent):
 def root(x,n):
     if x < 0:
         return "Error!"
-    if n == 0:
-        return "Error!"
-    elif n == 1:
+    elif n <= 1:
         return "Error!"
     else:
         return round (x ** (1/n),5)
@@ -102,5 +100,3 @@ def abs(x):
     else:
         return x*(-1)
  
-
-    
