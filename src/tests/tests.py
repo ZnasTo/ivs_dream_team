@@ -24,7 +24,7 @@ class TestMathLib(unittest.TestCase):
         module_name = "math_lib"                 
         math_module = importlib.import_module(module_name)
         result = math_module.addition(152000, 48000)     
-        self.assertEqual(result, 160000)
+        self.assertEqual(result, 200000)
     
     def test_addition_4(self):
         module_name = "math_lib"                 
@@ -60,7 +60,7 @@ class TestMathLib(unittest.TestCase):
         module_name = "math_lib"                 
         math_module = importlib.import_module(module_name)
         result = math_module.addition(-5.4, 1.2)     
-        self.assertEqual(result, -4.4)
+        self.assertEqual(result, -4.2)
 
     def test_addition_10(self):
         module_name = "math_lib"                 
@@ -252,13 +252,13 @@ class TestMathLib(unittest.TestCase):
         module_name = "math_lib"                 
         math_module = importlib.import_module(module_name)
         result = math_module.division(8, 0)     
-        self.assertEqual(result, "Error! Division by zero")       
+        self.assertEqual(result, "Error!")       
 
     def test_division_error_2(self):
         module_name = "math_lib"                 
         math_module = importlib.import_module(module_name)
         result = math_module.division(8, -0)     
-        self.assertEqual(result, "Error! Division by zero")       
+        self.assertEqual(result, "Error!")       
 #############################################################################################################################    
     def test_factorial_1(self):
         module_name = "math_lib"                
@@ -335,140 +335,128 @@ class TestMathLib(unittest.TestCase):
     def test_expon_8(self):
         module_name = "math_lib"
         math_module = importlib.import_module(module_name)
-        result = math_module.expon(2.2, 2)        #the first argument is number, second is exponent: 15^10
+        result = math_module.expon(2.2, 2)        #the first argument is number, second is exponent: 2.2^2
         self.assertEqual(result, 4.84)
 
     def test_expon_9(self):
         module_name = "math_lib"
         math_module = importlib.import_module(module_name)
-        result = math_module.expon(14.65, 3)        #the first argument is number, second is exponent: 15^10
+        result = math_module.expon(14.65, 3)        #the first argument is number, second is exponent: 14.65^3
         self.assertEqual(result, 3144.219625)
 
     def test_expon_error_1(self):
         module_name = "math_lib"
         math_module = importlib.import_module(module_name)
-        result = math_module.expon(10, 1.5)        #the first argument is number, second is exponent: 15^10
+        result = math_module.expon(10, 1.5)        #the first argument is number, second is exponent: 10^1.5
         self.assertEqual(result, "Error!")
 
     def test_expon_error_2(self):
         module_name = "math_lib"
         math_module = importlib.import_module(module_name)
-        result = math_module.expon(10, -2)        #the first argument is number, second is exponent: 15^10
+        result = math_module.expon(10, -2)        #the first argument is number, second is exponent: 10^-2
         self.assertEqual(result, "Error!")
 #############################################################################################################################
     def test_root_1(self):
         module_name = "math_lib"
         math_module = importlib.import_module(module_name)
-        result = math_module.expon(4, 2)        #the name of the function has to corespond with name here "root", the first argument is number, second is root
+        result = math_module.root(4, 2)        #the name of the function has to corespond with name here "root", the first argument is number, second is root
         self.assertEqual(result, 2)
 
     def test_root_2(self):
         module_name = "math_lib"
         math_module = importlib.import_module(module_name)
-        result = math_module.expon(64, 2)        #the first argument is number, second is root
+        result = math_module.root(64, 2)        #the first argument is number, second is root
         self.assertEqual(result, 8)
 
     def test_root_3(self):
         module_name = "math_lib"
         math_module = importlib.import_module(module_name)
-        result = math_module.expon(8, 3)        #the first argument is number, second is root
+        result = math_module.root(8, 3)        #the first argument is number, second is root
         self.assertEqual(result, 2)
 
     def test_root_4(self):
         module_name = "math_lib"
         math_module = importlib.import_module(module_name)
-        result = math_module.expon(-8, 3)        #the first argument is number, second is root
+        result = math_module.root(-8, 3)        #the first argument is number, second is root
         self.assertEqual(result, -2)
 
     def test_root_5(self):
         module_name = "math_lib"
         math_module = importlib.import_module(module_name)
-        result = math_module.expon(8000000, 3)        #the first argument is number, second is root
+        result = math_module.root(8000000, 3)        #the first argument is number, second is root
         self.assertEqual(result, 200)
 
     def test_root_6(self):
         module_name = "math_lib"
         math_module = importlib.import_module(module_name)
-        result = math_module.expon(2.5, 2)        #the first argument is number, second is root
+        result = math_module.root(2.5, 2)        #the first argument is number, second is root
         self.assertEqual(result, 1.58114)
 
     def test_root_error_1(self):
         module_name = "math_lib"
         math_module = importlib.import_module(module_name)
-        result = math_module.expon(8, 0)        #the first argument is number, second is root
+        result = math_module.root(8, 0)        #the first argument is number, second is root
         self.assertEqual(result, "Error!")        
 
     def test_root_error_2(self):
         module_name = "math_lib"
         math_module = importlib.import_module(module_name)
-        result = math_module.expon(8, 1)        #the first argument is number, second is root
+        result = math_module.root(8, 1)        #the first argument is number, second is root
         self.assertEqual(result, "Error!")        
 
     def test_root_error_3(self):
         module_name = "math_lib"
         math_module = importlib.import_module(module_name)
-        result = math_module.expon(-8, 1)        #the first argument is number, second is root
+        result = math_module.root(-8, 1)        #the first argument is number, second is root
         self.assertEqual(result, "Error!")        
 
     def test_root_error_4(self):
         module_name = "math_lib"
         math_module = importlib.import_module(module_name)
-        result = math_module.expon(-8, 0)        #the first argument is number, second is root
+        result = math_module.root(-8, 0)        #the first argument is number, second is root
         self.assertEqual(result, "Error!")        
 
     def test_root_error_5(self):
         module_name = "math_lib"
         math_module = importlib.import_module(module_name)
-        result = math_module.expon(-8, -3)        #the first argument is number, second is root
+        result = math_module.root(-8, -3)        #the first argument is number, second is root
         self.assertEqual(result, "Error!")        
 
     def test_root_error_6(self):
         module_name = "math_lib"
         math_module = importlib.import_module(module_name)
-        result = math_module.expon(8, -3)        #the first argument is number, second is root
+        result = math_module.root(8, -3)        #the first argument is number, second is root
         self.assertEqual(result, "Error!")        
 #############################################################################################################################
-    def test_ln_1(self):
-        module_name = "math_lab"
+    def test_abs_1(self):
+        module_name = "math_lib"
         math_module = importlib.import_module(module_name)
-        result = math_module.ln(1)              
+        result = math_module.abs(1)
+        self.assertEqual(result, 1)
+
+    def test_abs_2(self):
+        module_name = "math_lib"
+        math_module = importlib.import_module(module_name)
+        result = math_module.abs(0)
         self.assertEqual(result, 0)
 
-    def test_ln_2(self):
-        module_name = "math_lab"
+    def test_abs_3(self):
+        module_name = "math_lib"
         math_module = importlib.import_module(module_name)
-        result = math_module.ln(2)              
-        self.assertEqual(result, 0.693147)
+        result = math_module.abs(-1)
+        self.assertEqual(result, 1)
 
-    def test_ln_3(self):
-        module_name = "math_lab"
+    def test_abs_4(self):
+        module_name = "math_lib"
         math_module = importlib.import_module(module_name)
-        result = math_module.ln(150)              
-        self.assertEqual(result, 5.01064)
+        result = math_module.abs(13.58)
+        self.assertEqual(result, 13.58)
 
-    def test_ln_4(self):
-        module_name = "math_lab"
+    def test_abs_5(self):
+        module_name = "math_lib"
         math_module = importlib.import_module(module_name)
-        result = math_module.ln(150000)              
-        self.assertEqual(result, 11.91839)
-
-    def test_ln_5(self):
-        module_name = "math_lab"
-        math_module = importlib.import_module(module_name)
-        result = math_module.ln(8.4)              
-        self.assertEqual(result, 2.12823)
-
-    def test_ln_error_1(self):
-        module_name = "math_lab"
-        math_module = importlib.import_module(module_name)
-        result = math_module.ln(0)              
-        self.assertEqual(result, "Error!")
-
-    def test_ln_error_2(self):
-        module_name = "math_lab"
-        math_module = importlib.import_module(module_name)
-        result = math_module.ln(-1)              
-        self.assertEqual(result, "Error!")
+        result = math_module.abs(-13.58)
+        self.assertEqual(result, 13.58)
 
 
 if __name__ == '__main__':
