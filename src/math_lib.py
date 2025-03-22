@@ -92,8 +92,10 @@ def root(x,n):
     elif (n % 2) == 1:
         if (n <= 1):
             return "Error!"
-        else:
+        elif (x < 0):
             return round (-abs(x) ** (1/n),5)
+        else:
+            return round (x ** (1/n),5)
     
 ##
 # @brief Function will absolut value from number
