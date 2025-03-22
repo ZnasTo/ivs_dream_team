@@ -82,12 +82,18 @@ def expon(x, exponent):
 # @return n root of x
 # 
 def root(x,n):
-    if x < 0:
-        return "Error!"
-    elif n <= 1:
-        return "Error!"
-    else:
-        return round (x ** (1/n),5)
+    if (n % 2) == 0:
+        if ((x < 0) or (n <= 1)):
+            return "Error!"
+    
+        else:
+            return round (x ** (1/n),5)
+        
+    elif (n % 2) == 1:
+        if (n <= 1):
+            return "Error!"
+        else:
+            return round (-abs(x) ** (1/n),5)
     
 ##
 # @brief Function will absolut value from number
