@@ -10,8 +10,11 @@
 # @return Sum of x and y
 #
 def addition(x,y):  
-    return x+y
+    result = x + y
+    if abs(result) >= 1e13:
+            return f"{result:.5e}"
 
+    return round(result,5)
 
 ##
 # @brief Function substract 2 numbers
@@ -29,8 +32,15 @@ def subtraction(x,y):
 # @return Product of x and y
 #
 def multiplication(x,y):
-    return round(x*y,5)
+    result = x * y
+    if result ==0:
+        return 0
+    
+    if abs(result) >= 1e13 or abs(result) < 1e-5:
+            return f"{result:.5e}"
 
+    return round(result,5)
+print (multiplication(526,0))
 
 ##
 # @brief Function divide 2 numbers
@@ -51,15 +61,22 @@ def division(x,y):
 # @return Factorial of x
 #
 def factorial(x):
-    if x < 0:
+    if x < 0 or (not isinstance(x, int)):
         return "Error!"
-    elif x == 0:
+    
+    elif x == 0 or x == 1:
         return 1
-    elif x == 1:
-        return 1
-    else:
-        return x * factorial(x-1)
 
+    else:
+        result = 1
+
+        for i in range (x,1,-1): 
+            result = result * i
+        
+        if abs(result) >= 1e13:
+            return f"{result:.5e}"
+
+        return result
 
 ##
 # @brief Function aplifies a number
@@ -73,7 +90,11 @@ def expon(x, exponent):
     elif x == 0:
         return 1
     else:
-        return round(x ** exponent,5)
+        result = x ** exponent
+        if abs(result) >= 1e13:
+            return f"{result:.5e}"
+
+        return round(result,5)
 
 ##
 # @brief Function will do n-root of a number
