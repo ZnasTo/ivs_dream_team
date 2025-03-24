@@ -14,10 +14,10 @@ def show_screen(event=None):
 
 position = 0       # 0 chosen for better work with 10,100, etc
 numbers = []
+tmp_opperands = []
 opperands = []
-valid_opperands = ["+", "-", "*", "/", "!", "exp: ", "abs: ", "\u221A"]
+valid_opperands = ["+", "-", "*", "/", "!", "exp: ", "abs: ", "\u221A", "."]
 digits = []
-floatdigits = []
 
 def getchar_from_button(character):
     global position
@@ -35,33 +35,56 @@ def getchar_from_button(character):
     if isinstance(character, int):
         save_number(character, position)
         position += 1
+        print(numbers)
     
     if not (isinstance(character, int)):
         save_character(character, position)
         position = 0
 
 def save_number(number, position):  #saves digits as one number
-    global digits    
-    global floatdigits    # this is not used in this version, just set up for future
+    global digits   
+    global numbers 
 
-    if position == 0:
-        tmp = save_to_list(digits)
+    if position == 0:       
+        tmp = save_num_to_list(digits)
         numbers.append(tmp) 
         digits.clear()
+        digits.append(number)
+    else:
         digits.append(number)
     
 
 def save_character(character, position):
-    
-    return
+    global opperands
+    global tmp_opperands
+    global valid_opperands
 
-def save_to_list(digits):
+    if position == 0:
+        tmp = save_opp_to_list(tmp_opperands)
+        if tmp in valid_opperands:
+            opperands.append(tmp)
+        else:
+            print("ERROR UNKNOWN OPPERAND")     ##if user writes unknown opperands, or writes them wrong
+        opperands.append(tmp)
+        tmp_opperands.clear()
+        tmp_opperands.append(character)
+
+    else:
+        tmp_opperands.append(character)
+
+
+def save_num_to_list(digits):
     tmp = 0
     lenght = len(digits) - 1
     for digit in digits:
         tmp = digit*pow(10, position)
         tmp += tmp
+    return tmp
 
+def save_opp_to_list(opperands):
+    tmp = ""
+    for opperand in opperands:
+        tmp += opperand
     return tmp
 
 
