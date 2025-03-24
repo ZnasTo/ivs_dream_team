@@ -8,9 +8,9 @@ root = Tk()
 
 root.title("Calculator")
 root.configure(bg = 'Black')
-def show_screen(event=None):
-    screen = entry.get()
-    print(screen)
+#def show_screen(event=Nąone):
+#    screen = entry.get()
+#    print(screen)
 
 position = 0       # 0 chosen for better work with 10,100, etc
 numbers = []
@@ -31,15 +31,18 @@ def getchar_from_button(character):
 
     entry.delete(0, END)
     entry.insert(0, str(current) + str(character))
+
+    print(f"Button Pressed: {character}")   #DEBUG PRINT
     
     if isinstance(character, int):
         save_number(character, position)
         position += 1
-        print(numbers)
+        print(f"Numbers List: {numbers}")   #DEBUG PRINT
     
     if not (isinstance(character, int)):
         save_character(character, position)
         position = 0
+        print(f"Operands List: {opperands}")   #DEBIG PRINT
 
 def save_number(number, position):  #saves digits as one number
     global digits   
@@ -48,12 +51,13 @@ def save_number(number, position):  #saves digits as one number
     if position == 0:       
         tmp = save_num_to_list(digits)
         numbers.append(tmp) 
+        print(f"Saved Number: {tmp}")   #DEBUG PRINT
         digits.clear()
         digits.append(number)
     else:
         digits.append(number)
+        print(f"Digits Being Collected: {digits}")      #DEBUG PRINT
     
-
 def save_character(character, position):
     global opperands
     global tmp_opperands
@@ -63,28 +67,31 @@ def save_character(character, position):
         tmp = save_opp_to_list(tmp_opperands)
         if tmp in valid_opperands:
             opperands.append(tmp)
+            print(f"Added Operator: {tmp}")     #DEBUG PRINT
         else:
-            print("ERROR UNKNOWN OPPERAND")     ##if user writes unknown opperands, or writes them wrong
+            print(f"ERROR UNKNOWN OPERATOR: {tmp}")     ##if user writes unknown opperands, or writes them wrong
         opperands.append(tmp)
         tmp_opperands.clear()
         tmp_opperands.append(character)
 
     else:
         tmp_opperands.append(character)
-
+        print(f"Building Operator: {tmp_opperands}")        #DEBUG PRINT
 
 def save_num_to_list(digits):
     tmp = 0
     lenght = len(digits) - 1
     for digit in digits:
-        tmp = digit*pow(10, position)
-        tmp += tmp
+        tmp += digit*pow(10, lenght)
+        lenght -= 1
+    print(f"Final Number Built: {tmp}")     #DEBUG PRINT
     return tmp
 
 def save_opp_to_list(opperands):
     tmp = ""
     for opperand in opperands:
         tmp += opperand
+    print(f"Final Operator Built: {tmp}")       #DEBUG PRINT
     return tmp
 
 
@@ -94,7 +101,7 @@ def count_everything(numbers):
 
 entry = Entry(root, width = 25, borderwidth= 0, font = ("Arial", 20))
 entry.grid(row = 0, column = 0, columnspan = 4, rowspan= 2, padx= 10, pady= 10)
-entry.bind('<Return>', show_screen)
+#entry.bind('<Return>', show_screen)
 button_size = {"padx": 0, "pady": 0, "width": 5}
 
 button_0 = Button(root, text = "0",**button_size, command= lambda: getchar_from_button(0))
