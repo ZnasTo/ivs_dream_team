@@ -270,7 +270,7 @@ class TestMathLib(unittest.TestCase):
         module_name = "math_lib"
         math_module = importlib.import_module(module_name)
         result = math_module.factorial(0)
-        self.assertEqual(result, 0)
+        self.assertEqual(result, 1)
 
     def test_factorial_3(self):
         module_name = "math_lib"
@@ -342,7 +342,7 @@ class TestMathLib(unittest.TestCase):
         module_name = "math_lib"
         math_module = importlib.import_module(module_name)
         result = math_module.expon(14.65, 3)        #the first argument is number, second is exponent: 14.65^3
-        self.assertEqual(result, 3144.21962)
+        self.assertEqual(result, 3144.21963)
 
     def test_expon_error_1(self):
         module_name = "math_lib"
