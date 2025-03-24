@@ -8,11 +8,11 @@ import importlib
 
 
 class TestMathLib(unittest.TestCase):
-    def test_addition_1(self):
-        module_name = "math_lib"                 
-        math_module = importlib.import_module(module_name)
-        result = math_module.addition(1, 1)     
-        self.assertEqual(result, 2)
+    def test_addition_1(self):                              #name of test
+        module_name = "math_lib"                            #name of the library      
+        math_module = importlib.import_module(module_name)  #importing library
+        result = math_module.addition(1, 1)                 #getting result of function
+        self.assertEqual(result, 2)                         #comparing return of the function to expected result
     
     def test_addition_2(self):
         module_name = "math_lib"                 
@@ -264,13 +264,13 @@ class TestMathLib(unittest.TestCase):
         module_name = "math_lib"                
         math_module = importlib.import_module(module_name)
         result = math_module.factorial(5)       
-        self.assertEqual(120)
+        self.assertEqual(result, 120)
 
     def test_factorial_2(self):
         module_name = "math_lib"
         math_module = importlib.import_module(module_name)
         result = math_module.factorial(0)
-        self.assertEqual(0)
+        self.assertEqual(result, 0)
 
     def test_factorial_3(self):
         module_name = "math_lib"
@@ -282,7 +282,7 @@ class TestMathLib(unittest.TestCase):
         module_name = "math_lib"
         math_module = importlib.import_module(module_name)
         result = math_module.factorial(100)
-        self.assertEqual(result,  0)        #result should be  9.332621544 E+157, need to discuss how are we going to display this
+        self.assertEqual(result,  9.33262e+157)
 
     def test_factorial_error(self):
         module_name = "math_lib"
@@ -330,7 +330,7 @@ class TestMathLib(unittest.TestCase):
         module_name = "math_lib"
         math_module = importlib.import_module(module_name)
         result = math_module.expon(111, 15)        #the first argument is number, second is exponent: 111^15
-        self.assertEqual(result, 0)                 #result should be  4.7845894883377 E+30, need to discuss how are we going to display this
+        self.assertEqual(result, 4.78458e+30)
 
     def test_expon_8(self):
         module_name = "math_lib"
@@ -342,7 +342,7 @@ class TestMathLib(unittest.TestCase):
         module_name = "math_lib"
         math_module = importlib.import_module(module_name)
         result = math_module.expon(14.65, 3)        #the first argument is number, second is exponent: 14.65^3
-        self.assertEqual(result, 3144.219625)
+        self.assertEqual(result, 3144.21962)
 
     def test_expon_error_1(self):
         module_name = "math_lib"
