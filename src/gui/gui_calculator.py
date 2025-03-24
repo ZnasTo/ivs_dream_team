@@ -14,11 +14,21 @@ def show_screen(event=None):
 
 position = 0       # 0 chosen for better work with 10,100, etc
 numbers = []
+opperands = []
+valid_opperands = ["+", "-", "*", "/", "!", "exp: ", "abs: ", "\u221A"]
+digits = []
+floatdigits = []
 
 def getchar_from_button(character):
     global position
+    global digits
 
     current = entry.get()
+    if current == '=':
+        entry.delete(0, END)
+        count_everything(numbers)
+        digits.clear()
+
     entry.delete(0, END)
     entry.insert(0, str(current) + str(character))
     
@@ -26,37 +36,38 @@ def getchar_from_button(character):
         save_number(character, position)
         position += 1
     
-    elif character == '.':  #NOT WORKING
-        if '.' not in current:
-            print()
-    
     if not (isinstance(character, int)):
+        save_character(character, position)
         position = 0
 
-
 def save_number(number, position):  #saves digits as one number
-    digits = []     
-    floatdigits = []    # this is not used in this version, just set up for future
-    
-    if position >= 0:
-        tmp = save_to_list(digits, position)
-        numbers.append(tmp)
+    global digits    
+    global floatdigits    # this is not used in this version, just set up for future
+
+    if position == 0:
+        tmp = save_to_list(digits)
+        numbers.append(tmp) 
         digits.clear()
         digits.append(number)
     
-    if position < 0:    #not working, TODO NEXT VERSION
-        digits.append(number + pow(10, position))
-    
-    numbers.append(sum(digits))
 
-def save_to_list(digits, position):
+def save_character(character, position):
+    
+    return
+
+def save_to_list(digits):
     tmp = 0
+    lenght = len(digits) - 1
     for digit in digits:
-        tmp = digit + 10*position
-        position -= 1
+        tmp = digit*pow(10, position)
+        tmp += tmp
+
     return tmp
 
-print(numbers)
+
+def count_everything(numbers):
+    return 
+
 
 entry = Entry(root, width = 25, borderwidth= 0, font = ("Arial", 20))
 entry.grid(row = 0, column = 0, columnspan = 4, rowspan= 2, padx= 10, pady= 10)
@@ -75,7 +86,6 @@ button_8 = Button(root, text = "8",**button_size, command= lambda: getchar_from_
 button_9 = Button(root, text = "9",**button_size, command= lambda: getchar_from_button(9))
 
 
-
 button_mode = Button(root, text = "mode",**button_size, bg="#4C4E4E")
 button_help = Button(root, text = "?",**button_size, bg="#4C4E4E")
 button_equal = Button(root, text = "=",**button_size, bg="#4C4E4E", command= lambda: getchar_from_button("="))
@@ -92,7 +102,6 @@ button_multiply = Button(root, text = "*",**button_size, command= lambda: getcha
 button_fact = Button(root, text = "!",**button_size, command= lambda: getchar_from_button("!"))
 button_exp = Button(root, text = "exp",**button_size, command= lambda: getchar_from_button("exp: "))
 button_div = Button(root, text = "/",**button_size, command= lambda: getchar_from_button("/"))
-
 
 
 button_0.grid(row = 7, column = 1)
