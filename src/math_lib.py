@@ -12,7 +12,7 @@
 def addition(x,y):  
     result = x + y
     if abs(result) >= 1e13:
-            return f"{result:.5e}"
+            return float(f"{result:.5e}")
 
     return round(result,5)
 
@@ -37,10 +37,10 @@ def multiplication(x,y):
         return 0
     
     if abs(result) >= 1e13 or abs(result) < 1e-5:
-            return f"{result:.5e}"
+            return float(f"{result:.5e}")
 
     return round(result,5)
-print (multiplication(526,0))
+
 
 ##
 # @brief Function divide 2 numbers
@@ -74,7 +74,7 @@ def factorial(x):
             result = result * i
         
         if abs(result) >= 1e13:
-            return f"{result:.5e}"
+            return float(f"{result:.5e}")
 
         return result
 
@@ -92,7 +92,7 @@ def expon(x, exponent):
     else:
         result = x ** exponent
         if abs(result) >= 1e13:
-            return f"{result:.5e}"
+            return float(f"{result:.5e}")
 
         return round(result,5)
 
