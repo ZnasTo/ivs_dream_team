@@ -330,7 +330,7 @@ class TestMathLib(unittest.TestCase):
         module_name = "math_lib"
         math_module = importlib.import_module(module_name)
         result = math_module.expon(111, 15)        #the first argument is number, second is exponent: 111^15
-        self.assertEqual(result, 4.78458e+30)
+        self.assertEqual(result, 4.78459e+30)
 
     def test_expon_8(self):
         module_name = "math_lib"
