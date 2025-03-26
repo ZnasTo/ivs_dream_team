@@ -4,6 +4,10 @@
 #   This file contains Graphical User Interface for the calculator
 from tkinter import *
 
+#TODO - input from keyboard isnt added to lists,
+#     - first number in number list is 0!!!!
+    
+
 root = Tk()
 
 root.title("Calculator")
@@ -32,7 +36,7 @@ def getchar_from_button(character):
     entry.delete(0, END)
     entry.insert(0, str(current) + str(character))
 
-    print(f"Button Pressed: {character}")   #DEBUG PRINT
+    #print(f"Button Pressed: {character}")   #DEBUG PRINT
     
     if isinstance(character, int):
         save_number(character, position)
@@ -70,10 +74,7 @@ def save_character(character, position):
             print(f"Added Operator: {tmp}")     #DEBUG PRINT
         else:
             print(f"ERROR UNKNOWN OPERATOR: {tmp}")     ##if user writes unknown opperands, or writes them wrong
-        opperands.append(tmp)
         tmp_opperands.clear()
-        tmp_opperands.append(character)
-
     else:
         tmp_opperands.append(character)
         print(f"Building Operator: {tmp_opperands}")        #DEBUG PRINT
