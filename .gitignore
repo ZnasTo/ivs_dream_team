@@ -27,3 +27,7 @@
 *.exe
 *.out
 *.app
+
+# Ignore all files in profiling except, . pdf
+/profiling/*
+!/profiling/*.pdf
