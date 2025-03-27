@@ -1,4 +1,4 @@
-import sys, re, math_lib
+import sys, re, math_lib #, statistics
 
 ##
 # @brief reads the nubmers from stdin, and prints their standard deviation
@@ -6,6 +6,7 @@ import sys, re, math_lib
 def profiling():
     nums:list[float] = readNumbers()
     print(standardDeviation(nums))
+    # print(statistics.stdev(nums)) # sample result
     
 
 ##
@@ -31,7 +32,6 @@ def sum(nums):
         sum = math_lib.addition(sum, num)
 
     return sum
-
 
 ##
 # @brief calculates the x with strip in the standard deviation formula
