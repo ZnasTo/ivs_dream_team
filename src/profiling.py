@@ -1,3 +1,9 @@
+##
+# @file profiling.py
+# 
+# @brief Calculates the standard deviation 
+# @author Aleš Recman
+
 import sys, re, math_lib #, statistics
 
 ##
