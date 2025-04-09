@@ -1,108 +1,51 @@
 ##
+# 
 # @author xkovacj00, Jakub Kováčik
-#
-#   This file contains Graphical User Interface for the calculator
+# @file hui_calculator.px
+# @brief This file contains Graphical User Interface for the calculator
+# 
+# @TODO 
+##
 from tkinter import *
-
-#TODO - input from keyboard isnt added to lists,
-#     - first number in number list is 0!!!!
+import re
     
 
 root = Tk()
 
 root.title("Calculator")
 root.configure(bg = 'Black')
-#def show_screen(event=Nąone):
-#    screen = entry.get()
-#    print(screen)
 
-position = 0       # 0 chosen for better work with 10,100, etc
-numbers = []
-tmp_opperands = []
-opperands = []
 valid_opperands = ["+", "-", "*", "/", "!", "exp: ", "abs: ", "\u221A", "."]
-digits = []
+
+
+def split_formula(input):
+    pattern = r"(\d+|\^|abs|\.|\u221A|[+\-*/!])"        #splitting the array by these opperands
+    numbers__and_opperands = re.findall(pattern, input)
+    return numbers__and_opperands
+
 
 def getchar_from_button(character):
-    global position
-    global digits
-
-    current = entry.get()
-    if current == '=':
-        entry.delete(0, END)
-        count_everything(numbers)
-        digits.clear()
-
-    entry.delete(0, END)
-    entry.insert(0, str(current) + str(character))
-
-    #print(f"Button Pressed: {character}")   #DEBUG PRINT
+    match character:
+        case "=":
+            result = count_everything(split_formula(entry.get()))
+            entry.delete(0, END)
+            entry.insert(0, result)
+        case "AC":
+            entry.delete(0, END)
+        case "LC":
+            entry.delete(len(entry.get()) - 1, END)
+        case _:
+            entry.insert(END, character)
     
-    if isinstance(character, int):
-        save_number(character, position)
-        position += 1
-        print(f"Numbers List: {numbers}")   #DEBUG PRINT
-    
-    if not (isinstance(character, int)):
-        save_character(character, position)
-        position = 0
-        print(f"Operands List: {opperands}")   #DEBIG PRINT
-
-def save_number(number, position):  #saves digits as one number
-    global digits   
-    global numbers 
-
-    if position == 0:       
-        tmp = save_num_to_list(digits)
-        numbers.append(tmp) 
-        print(f"Saved Number: {tmp}")   #DEBUG PRINT
-        digits.clear()
-        digits.append(number)
-    else:
-        digits.append(number)
-        print(f"Digits Being Collected: {digits}")      #DEBUG PRINT
-    
-def save_character(character, position):
-    global opperands
-    global tmp_opperands
-    global valid_opperands
-
-    if position == 0:
-        tmp = save_opp_to_list(tmp_opperands)
-        if tmp in valid_opperands:
-            opperands.append(tmp)
-            print(f"Added Operator: {tmp}")     #DEBUG PRINT
-        else:
-            print(f"ERROR UNKNOWN OPERATOR: {tmp}")     ##if user writes unknown opperands, or writes them wrong
-        tmp_opperands.clear()
-    else:
-        tmp_opperands.append(character)
-        print(f"Building Operator: {tmp_opperands}")        #DEBUG PRINT
-
-def save_num_to_list(digits):
-    tmp = 0
-    lenght = len(digits) - 1
-    for digit in digits:
-        tmp += digit*pow(10, lenght)
-        lenght -= 1
-    print(f"Final Number Built: {tmp}")     #DEBUG PRINT
-    return tmp
-
-def save_opp_to_list(opperands):
-    tmp = ""
-    for opperand in opperands:
-        tmp += opperand
-    print(f"Final Operator Built: {tmp}")       #DEBUG PRINT
-    return tmp
-
-
 def count_everything(numbers):
-    return 
-
+    valid_formula = validity_check(numbers)
+    result = 1
+    return result
+def validity_check(formula):
+    return
 
 entry = Entry(root, width = 25, borderwidth= 0, font = ("Arial", 20))
 entry.grid(row = 0, column = 0, columnspan = 4, rowspan= 2, padx= 10, pady= 10)
-#entry.bind('<Return>', show_screen)
 button_size = {"padx": 0, "pady": 0, "width": 5}
 
 button_0 = Button(root, text = "0",**button_size, command= lambda: getchar_from_button(0))
@@ -128,10 +71,10 @@ button_float = Button(root, text = ".",**button_size, command= lambda: getchar_f
 button_plus = Button(root, text = "+",**button_size, command= lambda: getchar_from_button("+"))
 button_minus = Button(root, text = "-",**button_size, command= lambda: getchar_from_button("-"))
 button_sqrt = Button(root, text = "\u221A",**button_size, command= lambda: getchar_from_button("\u221A"))
-button_abs = Button(root, text = "abs",**button_size, command= lambda: getchar_from_button("abs: "))
+button_abs = Button(root, text = "abs",**button_size, command= lambda: getchar_from_button("abs"))
 button_multiply = Button(root, text = "*",**button_size, command= lambda: getchar_from_button("*"))
 button_fact = Button(root, text = "!",**button_size, command= lambda: getchar_from_button("!"))
-button_exp = Button(root, text = "exp",**button_size, command= lambda: getchar_from_button("exp: "))
+button_exp = Button(root, text = "^",**button_size, command= lambda: getchar_from_button("^"))
 button_div = Button(root, text = "/",**button_size, command= lambda: getchar_from_button("/"))
 
 
@@ -169,5 +112,5 @@ button_fact.grid(row = 2, column = 1)
 button_exp.grid(row = 2, column = 2)
 button_div.grid(row = 2, column = 3)
 
-
+print (entry.get())
 root.mainloop()
