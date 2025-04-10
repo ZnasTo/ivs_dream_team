@@ -1,11 +1,10 @@
 ##
-# 
-# @author xkovacj00, Jakub Kováčik
-# @file hui_calculator.px
-# @brief This file contains Graphical User Interface for the calculator
-# 
-# @TODO 
-##
+#@author xkovacj00, Jakub Kováčik
+#@file hui_calculator.px
+#@brief This file contains Graphical User Interface for the calculator 
+#@TODO 
+#
+
 from tkinter import *
 import re
     
@@ -15,15 +14,22 @@ root = Tk()
 root.title("Calculator")
 root.configure(bg = 'Black')
 
-valid_opperands = ["+", "-", "*", "/", "!", "exp: ", "abs: ", "\u221A", "."]
+valid_opperands = ["+", "-", "*", "/", "!", "^", "abs", "\u221A", "."]
 
 
+##  This function splits user input into array
+#
+#   @param input everything that user typed into calculator
+#   @return splitted array of opperands and numbers
+#
 def split_formula(input):
     pattern = r"(\d+|\^|abs|\.|\u221A|[+\-*/!])"        #splitting the array by these opperands
     numbers__and_opperands = re.findall(pattern, input)
     return numbers__and_opperands
 
-
+##  This function collets inputs as units
+#   @param character input of user
+#
 def getchar_from_button(character):
     match character:
         case "=":
@@ -37,12 +43,22 @@ def getchar_from_button(character):
         case _:
             entry.insert(END, character)
     
+
 def count_everything(numbers):
     valid_formula = validity_check(numbers)
     result = 1
     return result
+
+##  This function checks if the input is valid
+#   @param formula the input string
+#   @return 0 if the input is valid
+#           1 if the input is invalid
+#
 def validity_check(formula):
-    return
+    for element in formula:
+        if not (element.isdigit() or element in valid_opperands):
+            return 1        #return is 1 if it is not valid
+    return 0
 
 entry = Entry(root, width = 25, borderwidth= 0, font = ("Arial", 20))
 entry.grid(row = 0, column = 0, columnspan = 4, rowspan= 2, padx= 10, pady= 10)
@@ -112,5 +128,5 @@ button_fact.grid(row = 2, column = 1)
 button_exp.grid(row = 2, column = 2)
 button_div.grid(row = 2, column = 3)
 
-print (entry.get())
+
 root.mainloop()
