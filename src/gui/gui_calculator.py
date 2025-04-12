@@ -7,7 +7,7 @@
 
 from tkinter import *
 import re
-    
+from math_lib import *
 
 root = Tk()
 
@@ -42,14 +42,38 @@ def getchar_from_button(character):
             entry.delete(len(entry.get()) - 1, END)
         case _:
             entry.insert(END, character)
-    
+##  This function evaluates the formula
+#   @param formula array of nubers and opperands
+#   @return result of the wohole formula  
+#
+def evaluate_formula(formula):
+    indexes_to_delete = []
+    numbers= []
+    index_to_append = 0
+    for i,element in enumerate(formula):
+        if element == ".":
+            indexes_to_delete.extend([i - 1, i, i + 1])
+            whole_part = formula[i -1]
+            fractional_part = formula[i + 1]
+            numbers.append(float(whole_part + "." + fractional_part))
+    numbers.reverse()       #the first number i will be adding is the last in the original array
+    for indexes in reversed(indexes_to_delete):
+        index_to_append += 1
+        if (index_to_append % 3 == 0):
+            del formula[indexes]
+            formula.insert(indexes, numbers[int((index_to_append/3) -1)])        
+            continue      
+        del formula[indexes]
+    result = 1
 
-def count_everything(numbers):
-    valid_formula = validity_check(numbers)
+    return result
+
+def count_everything(formula):
+    valid_formula = validity_check(formula)
     if valid_formula!=0:
         result = "ERROR, WRONG OPPERANDS"
     if valid_formula == 0:
-        result = "GOOD OPPERANDS"
+        result = evaluate_formula(formula)
     return result
 
 ##  This function checks if the input is valid
@@ -75,18 +99,21 @@ def validity_check(formula):
             case "abs":
                 if i == len(formula) -1:
                     return 6
-                if not(formula[i + 1].isdigit()):
+                if not(formula[i + 1].isdigit() or formula[i + 1] == "-"):
                     return 7
+                if (i + 2 < len(formula)):
+                    if not(formula[i + 1] == "-" and formula [i + 2].isdigit()):
+                        return 8
             case "\u221A":
                 if i == 0 or i == len(formula) -1:
-                    return 8
-                if not(formula[i -1].isdigit() and formula[i + 1].isdigit()):
                     return 9
+                if not(formula[i -1].isdigit() and formula[i + 1].isdigit()):
+                    return 10
             case "^":
                 if i == 0 or i == len(formula) -1:
-                    return 10
-                if not(formula[i -1].isdigit() and formula[i + 1].isdigit()):
                     return 11
+                if not(formula[i -1].isdigit() and formula[i + 1].isdigit()):
+                    return 12
     return 0
 
 entry = Entry(root, width = 25, borderwidth= 0, font = ("Arial", 20))
