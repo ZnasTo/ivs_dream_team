@@ -50,20 +50,94 @@ def evaluate_formula(formula):
     indexes_to_delete = []
     numbers= []
     index_to_append = 0
+    string_to_int = 0
     for i,element in enumerate(formula):
+        if element.isdigit():
+            string_to_int = int(formula[i])
+            del formula[i]
+            formula.insert(i, string_to_int)
+
+    for i,element in enumerate(formula):        #joining floating numbers start
         if element == ".":
             indexes_to_delete.extend([i - 1, i, i + 1])
             whole_part = formula[i -1]
             fractional_part = formula[i + 1]
-            numbers.append(float(whole_part + "." + fractional_part))
+            numbers.append(float(f"{whole_part}.{fractional_part}"))
     numbers.reverse()       #the first number i will be adding is the last in the original array
+    
     for indexes in reversed(indexes_to_delete):
         index_to_append += 1
         if (index_to_append % 3 == 0):
             del formula[indexes]
             formula.insert(indexes, numbers[int((index_to_append/3) -1)])        
             continue      
-        del formula[indexes]
+        del formula[indexes]            #joining floating numbers end
+    
+
+    indexes_to_delete = []       #abs start
+    negative_indexes_to_delete = []
+    numbers= []
+    negative_numbers= []
+    for i,element in enumerate(formula):       
+        if element =="abs":
+            if(formula[i + 1] == "-"):
+                negative_indexes_to_delete.extend([i, i + 1, i + 2])
+                negative_numbers.append(absolute_value(int(f"{formula[i+1]}{formula[i+2]}")))
+            else:
+                indexes_to_delete.extend([i, i+ 1])
+                numbers.append(absolute_value(int(formula[i+1])))
+    
+    numbers.reverse()
+    index_to_append = 0
+    for indexes in reversed(indexes_to_delete):         #if i make absolute value of positive number, i have to change the way i delete and insert to array
+        index_to_append += 1
+        if (index_to_append % 2 == 0):
+            del formula[indexes]
+            if (((index_to_append/2) -1) == len(formula) - 2):
+                formula.append(numbers[int((index_to_append/2) -1)])
+                continue
+            else:
+                formula.insert(indexes, numbers[int((index_to_append/2) -1)])        
+                continue      
+        del formula[indexes]                
+        
+    negative_numbers.reverse()
+    index_to_append = 0
+    for indexes in reversed(negative_indexes_to_delete):
+        index_to_append += 1
+        if (index_to_append % 3 == 0):
+            del formula[indexes]
+            formula.insert(indexes, negative_numbers[int((index_to_append/3) -1)])        
+            continue      
+        del formula[indexes]            #abs end 
+
+
+    indexes_to_delete = []
+    numbers= []
+    index_to_append = 0
+    string_to_int = 0
+    for i,element in enumerate(formula):        #factorial numbers start
+        if element == "!":
+            indexes_to_delete.extend([i - 1, i])
+            number_for_factorial = formula [i - 1]
+            number_after_factorial = factorial(number_for_factorial)
+            if number_after_factorial == "Error!":
+                print("desatinne cislo")
+                return 1        #returning 1 after invalid input
+            numbers.append(number_after_factorial)
+    numbers.reverse()       #the first number i will be adding is the last in the original array
+    
+    for indexes in reversed(indexes_to_delete):
+        index_to_append += 1
+        if (index_to_append % 2 == 0):
+            del formula[indexes]
+            formula.insert(indexes, numbers[int((index_to_append/2) -1)])        
+            continue      
+        del formula[indexes]            #factorial numbers end
+    print(f"{formula}")
+    
+    
+
     result = 1
 
     return result
@@ -71,7 +145,7 @@ def evaluate_formula(formula):
 def count_everything(formula):
     valid_formula = validity_check(formula)
     if valid_formula!=0:
-        result = "ERROR, WRONG OPPERANDS"
+        result = valid_formula
     if valid_formula == 0:
         result = evaluate_formula(formula)
     return result
@@ -99,11 +173,11 @@ def validity_check(formula):
             case "abs":
                 if i == len(formula) -1:
                     return 6
-                if not(formula[i + 1].isdigit() or formula[i + 1] == "-"):
-                    return 7
-                if (i + 2 < len(formula)):
-                    if not(formula[i + 1] == "-" and formula [i + 2].isdigit()):
-                        return 8
+                if formula[i + 1] == "-":
+                    if i + 2 >= len(formula) or not formula[i + 2].isdigit():
+                        return 7
+                elif not formula[i + 1].isdigit():
+                    return 8
             case "\u221A":
                 if i == 0 or i == len(formula) -1:
                     return 9
