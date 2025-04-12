@@ -115,7 +115,6 @@ def evaluate_formula(formula):
     indexes_to_delete = []
     numbers= []
     index_to_append = 0
-    string_to_int = 0
     for i,element in enumerate(formula):        #factorial numbers start
         if element == "!":
             indexes_to_delete.extend([i - 1, i])
@@ -134,9 +133,33 @@ def evaluate_formula(formula):
             formula.insert(indexes, numbers[int((index_to_append/2) -1)])        
             continue      
         del formula[indexes]            #factorial numbers end
+    
+    indexes_to_delete = []
+    numbers= []
+    index_to_append = 0
+    for i,element in enumerate(formula):        #root start
+        if element == "\u221A":
+            indexes_to_delete.extend([i - 1, i, i + 1])
+            radicant = formula [i + 1]
+            root_index = formula [i - 1]
+            number_after_root = rootf(radicant, root_index)
+            if number_after_root == "Error!":
+                return 1
+            numbers.append(number_after_root)
+    numbers.reverse()       #the first number i will be adding is the last in the original array
+    
+    for indexes in reversed(indexes_to_delete):
+        index_to_append += 1
+        if (index_to_append % 3 == 0):
+            del formula[indexes]
+            formula.insert(indexes, numbers[int((index_to_append/3) -1)])        
+            continue      
+        del formula[indexes]            #root end    
     print(f"{formula}")
-    
-    
+
+
+
+
 
     result = 1
 
