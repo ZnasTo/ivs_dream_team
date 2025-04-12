@@ -46,7 +46,10 @@ def getchar_from_button(character):
 
 def count_everything(numbers):
     valid_formula = validity_check(numbers)
-    result = 1
+    if valid_formula!=0:
+        result = "ERROR, WRONG OPPERANDS"
+    if valid_formula == 0:
+        result = "GOOD OPPERANDS"
     return result
 
 ##  This function checks if the input is valid
@@ -55,9 +58,35 @@ def count_everything(numbers):
 #           1 if the input is invalid
 #
 def validity_check(formula):
-    for element in formula:
+    for i, element in enumerate(formula):
         if not (element.isdigit() or element in valid_opperands):
             return 1        #return is 1 if it is not valid
+        match element:
+            case ".":
+                if i == 0 or i == len(formula) -1:         #i is the current index in formula, if the last or first character is ., it is invalid 
+                    return 2
+                if not (formula[i -1].isdigit() and formula[i + 1].isdigit()):      #digit needs to be before and after .
+                    return 3
+            case "!":
+                if i == 0:
+                    return 4
+                if not(formula[i -1].isdigit()):
+                    return 5
+            case "abs":
+                if i == len(formula) -1:
+                    return 6
+                if not(formula[i + 1].isdigit()):
+                    return 7
+            case "\u221A":
+                if i == 0 or i == len(formula) -1:
+                    return 8
+                if not(formula[i -1].isdigit() and formula[i + 1].isdigit()):
+                    return 9
+            case "^":
+                if i == 0 or i == len(formula) -1:
+                    return 10
+                if not(formula[i -1].isdigit() and formula[i + 1].isdigit()):
+                    return 11
     return 0
 
 entry = Entry(root, width = 25, borderwidth= 0, font = ("Arial", 20))
