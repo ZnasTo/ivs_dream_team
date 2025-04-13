@@ -2,7 +2,7 @@
 #@author xkovacj00, Jakub Kováčik
 #@file hui_calculator.px
 #@brief This file contains Graphical User Interface for the calculator 
-#@TODO 
+#@TODO operations such as [-6(result of previous evaluation) + - 9] FAIL
 #
 
 from tkinter import *
@@ -51,12 +51,12 @@ def evaluate_formula(formula):
     numbers= []
     index_to_append = 0
     string_to_int = 0
-    for i,element in enumerate(formula):
+    for i,element in enumerate(formula):        #converting string, to integers
         if element.isdigit():
             string_to_int = int(formula[i])
             del formula[i]
             formula.insert(i, string_to_int)
-
+    
     for i,element in enumerate(formula):        #joining floating numbers start
         if element == ".":
             indexes_to_delete.extend([i - 1, i, i + 1])
@@ -115,14 +115,14 @@ def evaluate_formula(formula):
     indexes_to_delete = []
     numbers= []
     index_to_append = 0
-    for i,element in enumerate(formula):        #factorial numbers start
+    for i,element in enumerate(formula):        #factorial start
         if element == "!":
             indexes_to_delete.extend([i - 1, i])
             number_for_factorial = formula [i - 1]
             number_after_factorial = factorial(number_for_factorial)
             if number_after_factorial == "Error!":
-                print("desatinne cislo")
-                return 1        #returning 1 after invalid input
+                result = "ERROR: Invalid number(factorial)"
+                return result        #returning 1 after invalid input
             numbers.append(number_after_factorial)
     numbers.reverse()       #the first number i will be adding is the last in the original array
     
@@ -132,7 +132,7 @@ def evaluate_formula(formula):
             del formula[indexes]
             formula.insert(indexes, numbers[int((index_to_append/2) -1)])        
             continue      
-        del formula[indexes]            #factorial numbers end
+        del formula[indexes]            #factorial end
     
     indexes_to_delete = []
     numbers= []
@@ -144,7 +144,8 @@ def evaluate_formula(formula):
             root_index = formula [i - 1]
             number_after_root = rootf(radicant, root_index)
             if number_after_root == "Error!":
-                return 1
+                result = "ERROR: Invalid number(roof)"
+                return result
             numbers.append(number_after_root)
     numbers.reverse()       #the first number i will be adding is the last in the original array
     
@@ -155,20 +156,85 @@ def evaluate_formula(formula):
             formula.insert(indexes, numbers[int((index_to_append/3) -1)])        
             continue      
         del formula[indexes]            #root end    
-    print(f"{formula}")
 
+    indexes_to_delete = []          #exponent start
+    numbers= []
+    index_to_append = 0
+    for i, element in enumerate(formula):
+        if element == "^":
+            indexes_to_delete.extend([i - 1, i, i + 1])
+            base = formula[i - 1]
+            exponent = formula[i + 1]
+            number_after_exp = expon(base, exponent)
+            if number_after_exp == "Error!":
+                result = "ERROR: Invalid number(exponent)"
+                return 1
+            numbers.append(number_after_exp)
+    numbers.reverse()
 
+    for indexes in reversed(indexes_to_delete):
+        index_to_append += 1
+        if (index_to_append % 3 == 0):
+            del formula[indexes]
+            formula.insert(indexes, numbers[int((index_to_append/3) -1)])        
+            continue      
+        del formula[indexes]        #exponent end
+    
+    for i,element in enumerate(formula):        #placement after factorial etc. because it would result in invalid   
+        if element == "-" and isinstance(formula[i + 1], int):
+            if i == 0:
+                negative_number = -formula[i + 1]
+                formula[i: i + 2] = [negative_number]
+            elif not i == 0:
+                formula[i+1]=-(formula[i+1])
+                formula[i] = "+"
 
+    while "*" in formula:       #start of multiplication
+        for i, element in enumerate(formula):
+            if element == "*":
+                first_number = formula[i - 1]
+                second_number = formula[i + 1]
+                number_after_multiplication = multiplication(first_number, second_number)
+                formula[i - 1:i + 2] = [number_after_multiplication]
+                break           #end of multiplication
+            
+    while "/" in formula:       #start of division
+        for i, element in enumerate(formula):
+            if element == "/":
+                first_number = formula[i - 1]
+                second_number = formula[i + 1]
+                number_after_division = division(first_number, second_number)
+                if number_after_division == "Error!":
+                    result = "ERROR: Invalid number(division)"
+                    return result
+                formula[i - 1:i + 2] = [number_after_division]
+                break       #end of division
 
+    while "+" in formula:       
+        for i, element in enumerate(formula):
+            if element == "+":
+                first_number = formula[i - 1]
+                second_number = formula[i + 1]
+                number_after_addition = addition(first_number, second_number)
+                formula[i - 1:i + 2] = [number_after_addition]
+                break 
+    
+    while "-" in formula:       
+        for i, element in enumerate(formula):
+            if element == "-":
+                first_number = formula[i - 1]
+                second_number = formula[i + 1]
+                number_after_subtraction = subtraction(first_number, second_number)
+                formula[i - 1:i + 2] = [number_after_subtraction]
+                break 
 
-    result = 1
-
+    result = formula
     return result
 
 def count_everything(formula):
     valid_formula = validity_check(formula)
     if valid_formula!=0:
-        result = valid_formula
+        result = "ERROR: invalid input"
     if valid_formula == 0:
         result = evaluate_formula(formula)
     return result
