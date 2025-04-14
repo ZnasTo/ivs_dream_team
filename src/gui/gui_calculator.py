@@ -47,6 +47,11 @@ def getchar_from_button(character):
 #   @return result of the wohole formula  
 #
 def evaluate_formula(formula):
+
+    if formula[0] == "+":       #when + at the beginning is indicating positive number, i remove the +
+        del formula[0]
+
+    
     indexes_to_delete = []
     numbers= []
     index_to_append = 0
@@ -134,28 +139,6 @@ def evaluate_formula(formula):
             continue      
         del formula[indexes]            #factorial end
     
-    indexes_to_delete = []
-    numbers= []
-    index_to_append = 0
-    for i,element in enumerate(formula):        #root start
-        if element == "\u221A":
-            indexes_to_delete.extend([i - 1, i, i + 1])
-            radicant = formula [i + 1]
-            root_index = formula [i - 1]
-            number_after_root = rootf(radicant, root_index)
-            if number_after_root == "Error!":
-                result = "ERROR: Invalid number(roof)"
-                return result
-            numbers.append(number_after_root)
-    numbers.reverse()       #the first number i will be adding is the last in the original array
-    
-    for indexes in reversed(indexes_to_delete):
-        index_to_append += 1
-        if (index_to_append % 3 == 0):
-            del formula[indexes]
-            formula.insert(indexes, numbers[int((index_to_append/3) -1)])        
-            continue      
-        del formula[indexes]            #root end    
 
     indexes_to_delete = []          #exponent start
     numbers= []
@@ -179,9 +162,12 @@ def evaluate_formula(formula):
             formula.insert(indexes, numbers[int((index_to_append/3) -1)])        
             continue      
         del formula[indexes]        #exponent end
-    
+
     for i,element in enumerate(formula):        #placement after factorial etc. because it would result in invalid   
         if element == "-" and isinstance(formula[i + 1], int):
+            if i + 2 < len(formula) - 1:
+                if formula[i + 2] == "\u221A":
+                    continue
             if i == 0:
                 negative_number = -formula[i + 1]
                 formula[i: i + 2] = [negative_number]
@@ -189,9 +175,37 @@ def evaluate_formula(formula):
                 formula[i+1]=-(formula[i+1])
                 formula[i] = "+"
 
+    indexes_to_delete = []          #root start
+    numbers= []
+    index_to_append = 0
+    for i,element in enumerate(formula):        
+        if element == "\u221A":
+            if formula[i + 1] == "+":
+                del formula[i + 1]
+            indexes_to_delete.extend([i - 1, i, i + 1])
+            radicant = formula [i + 1]
+            root_index = formula [i - 1]
+            number_after_root = rootf(radicant, root_index)
+            if number_after_root == "Error!":
+                result = "ERROR: Invalid number(roof)"
+                return result
+            numbers.append(number_after_root)
+    numbers.reverse()       #the first number i will be adding is the last in the original array
+    
+    for indexes in reversed(indexes_to_delete):
+        index_to_append += 1
+        if (index_to_append % 3 == 0):
+            del formula[indexes]
+            formula.insert(indexes, numbers[int((index_to_append/3) -1)])        
+            continue      
+        del formula[indexes]            #root end    
+
+
     while "*" in formula:       #start of multiplication
         for i, element in enumerate(formula):
             if element == "*":
+                if formula[i + 1] == "+":
+                    del formula[i + 1]
                 first_number = formula[i - 1]
                 second_number = formula[i + 1]
                 number_after_multiplication = multiplication(first_number, second_number)
@@ -201,6 +215,8 @@ def evaluate_formula(formula):
     while "/" in formula:       #start of division
         for i, element in enumerate(formula):
             if element == "/":
+                if formula[i + 1] == "+":
+                    del formula[i + 1]
                 first_number = formula[i - 1]
                 second_number = formula[i + 1]
                 number_after_division = division(first_number, second_number)
@@ -209,7 +225,7 @@ def evaluate_formula(formula):
                     return result
                 formula[i - 1:i + 2] = [number_after_division]
                 break       #end of division
-
+    print(f"{formula}")
     while "+" in formula:       
         for i, element in enumerate(formula):
             if element == "+":
@@ -218,7 +234,7 @@ def evaluate_formula(formula):
                 number_after_addition = addition(first_number, second_number)
                 formula[i - 1:i + 2] = [number_after_addition]
                 break 
-    
+
     while "-" in formula:       
         for i, element in enumerate(formula):
             if element == "-":
@@ -227,7 +243,7 @@ def evaluate_formula(formula):
                 number_after_subtraction = subtraction(first_number, second_number)
                 formula[i - 1:i + 2] = [number_after_subtraction]
                 break 
-
+    print(f"{formula}")
     result = formula
     return result
 
@@ -270,13 +286,40 @@ def validity_check(formula):
             case "\u221A":
                 if i == 0 or i == len(formula) -1:
                     return 9
-                if not(formula[i -1].isdigit() and formula[i + 1].isdigit()):
+                if not(formula[i -1].isdigit() and (formula[i + 1].isdigit() or formula[i + 1] == "-" or formula[i + 1] == "abs")):
                     return 10
+                if i + 2 < len(formula):
+                    if (formula[i + 1] == "-"):
+                        if not (formula[i + 2].isdigit()):
+                            return 11
             case "^":
                 if i == 0 or i == len(formula) -1:
-                    return 11
-                if not(formula[i -1].isdigit() and formula[i + 1].isdigit()):
                     return 12
+                if not(formula[i -1].isdigit() and formula[i + 1].isdigit()):
+                    return 13
+            case "*":
+                if i == 0 or i == len(formula) - 1:
+                    return 14
+                if not((formula[i -1].isdigit() and formula[i + 1].isdigit()) or 
+                        (formula[i -1].isdigit() and formula[i + 1] == "abs") or 
+                        (formula[i -1].isdigit() and formula[i + 1] == "-") or
+                        ((formula[i -1].isdigit() and formula[i + 1] == "+"))):
+                    return 15
+            case "/":
+                if i == 0 or i == len(formula) - 1:
+                    return 16
+                if not((formula[i -1].isdigit() and formula[i + 1].isdigit()) or 
+                        (formula[i -1].isdigit() and formula[i + 1] == "abs") or 
+                        (formula[i -1].isdigit() and formula[i + 1] == "-") or
+                        ((formula[i -1].isdigit() and formula[i + 1] == "+"))):
+                    return 17
+            case"+":
+                if i == len(formula) - 1:
+                    return 18
+                
+            case "-":
+                if i == len(formula) - 1:
+                    return 19
     return 0
 
 entry = Entry(root, width = 25, borderwidth= 0, font = ("Arial", 20))
