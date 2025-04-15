@@ -1,6 +1,6 @@
 ##
 #@author xkovacj00, Jakub Kováčik
-#@file hui_calculator.px
+#@file gui_calculator.py
 #@brief This file contains Graphical User Interface for the calculator 
 #@TODO operations such as [-6(result of previous evaluation) + - 9] FAIL
 #
@@ -322,38 +322,38 @@ def validity_check(formula):
                     return 19
     return 0
 
-entry = Entry(root, width = 25, borderwidth= 0, font = ("Arial", 20))
+entry = Entry(root, width = 20, borderwidth= 0, font = ("Arial", 20))
 entry.grid(row = 0, column = 0, columnspan = 4, rowspan= 2, padx= 10, pady= 10)
-button_size = {"padx": 0, "pady": 0, "width": 5}
+button_size_color = {"padx": 0, "pady": 0, "width": 10, "fg": "white"}
 
-button_0 = Button(root, text = "0",**button_size, command= lambda: getchar_from_button(0))
-button_1 = Button(root, text = "1",**button_size, command= lambda: getchar_from_button(1))
-button_2 = Button(root, text = "2",**button_size, command= lambda: getchar_from_button(2))
-button_3 = Button(root, text = "3",**button_size, command= lambda: getchar_from_button(3))
-button_4 = Button(root, text = "4",**button_size, command= lambda: getchar_from_button(4))
-button_5 = Button(root, text = "5",**button_size, command= lambda: getchar_from_button(5))
-button_6 = Button(root, text = "6",**button_size, command= lambda: getchar_from_button(6))
-button_7 = Button(root, text = "7",**button_size, command= lambda: getchar_from_button(7))
-button_8 = Button(root, text = "8",**button_size, command= lambda: getchar_from_button(8))
-button_9 = Button(root, text = "9",**button_size, command= lambda: getchar_from_button(9))
-
-
-button_mode = Button(root, text = "mode",**button_size, bg="#4C4E4E")
-button_help = Button(root, text = "?",**button_size, bg="#4C4E4E")
-button_equal = Button(root, text = "=",**button_size, bg="#4C4E4E", command= lambda: getchar_from_button("="))
-button_ac = Button(root, text = "AC",**button_size, bg="#4C4E4E", command= lambda: getchar_from_button("AC"))
-button_lc = Button(root, text = "LC",**button_size, bg="#4C4E4E", command= lambda: getchar_from_button("LC"))
+button_0 = Button(root, text = "0",**button_size_color, bg = "gray20", command= lambda: getchar_from_button(0))
+button_1 = Button(root, text = "1",**button_size_color, bg = "gray20", command= lambda: getchar_from_button(1))
+button_2 = Button(root, text = "2",**button_size_color, bg = "gray20", command= lambda: getchar_from_button(2))
+button_3 = Button(root, text = "3",**button_size_color, bg = "gray20", command= lambda: getchar_from_button(3))
+button_4 = Button(root, text = "4",**button_size_color, bg = "gray20", command= lambda: getchar_from_button(4))
+button_5 = Button(root, text = "5",**button_size_color, bg = "gray20", command= lambda: getchar_from_button(5))
+button_6 = Button(root, text = "6",**button_size_color, bg = "gray20", command= lambda: getchar_from_button(6))
+button_7 = Button(root, text = "7",**button_size_color, bg = "gray20", command= lambda: getchar_from_button(7))
+button_8 = Button(root, text = "8",**button_size_color, bg = "gray20", command= lambda: getchar_from_button(8))
+button_9 = Button(root, text = "9",**button_size_color, bg = "gray20", command= lambda: getchar_from_button(9))
 
 
-button_float = Button(root, text = ".",**button_size, command= lambda: getchar_from_button("."))
-button_plus = Button(root, text = "+",**button_size, command= lambda: getchar_from_button("+"))
-button_minus = Button(root, text = "-",**button_size, command= lambda: getchar_from_button("-"))
-button_sqrt = Button(root, text = "\u221A",**button_size, command= lambda: getchar_from_button("\u221A"))
-button_abs = Button(root, text = "abs",**button_size, command= lambda: getchar_from_button("abs"))
-button_multiply = Button(root, text = "*",**button_size, command= lambda: getchar_from_button("*"))
-button_fact = Button(root, text = "!",**button_size, command= lambda: getchar_from_button("!"))
-button_exp = Button(root, text = "^",**button_size, command= lambda: getchar_from_button("^"))
-button_div = Button(root, text = "/",**button_size, command= lambda: getchar_from_button("/"))
+button_mode = Button(root, text = "mode",**button_size_color, bg = "gray20")
+button_help = Button(root, text = "?",**button_size_color, bg = "gray20")
+button_equal = Button(root, text = "=",**button_size_color, bg = "gray33", command= lambda: getchar_from_button("="))
+button_ac = Button(root, text = "AC",**button_size_color, bg = "gray33", command= lambda: getchar_from_button("AC"))
+button_lc = Button(root, text = "LC",**button_size_color, bg = "gray33", command= lambda: getchar_from_button("LC"))
+
+
+button_float = Button(root, text = ".",**button_size_color, bg = "gray20", command= lambda: getchar_from_button("."))
+button_plus = Button(root, text = "+",**button_size_color, bg = "dark orange", command= lambda: getchar_from_button("+"))
+button_minus = Button(root, text = "-",**button_size_color, bg = "dark orange", command= lambda: getchar_from_button("-"))
+button_sqrt = Button(root, text = "\u221A",**button_size_color, bg = "dark orange", command= lambda: getchar_from_button("\u221A"))
+button_abs = Button(root, text = "abs",**button_size_color, bg = "dark orange", command= lambda: getchar_from_button("abs"))
+button_multiply = Button(root, text = "*",**button_size_color, bg = "dark orange", command= lambda: getchar_from_button("*"))
+button_fact = Button(root, text = "!",**button_size_color, bg = "dark orange", command= lambda: getchar_from_button("!"))
+button_exp = Button(root, text = "^",**button_size_color, bg = "dark orange", command= lambda: getchar_from_button("^"))
+button_div = Button(root, text = "/",**button_size_color, bg = "dark orange", command= lambda: getchar_from_button("/"))
 
 
 button_0.grid(row = 7, column = 1)
