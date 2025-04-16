@@ -2,10 +2,12 @@
 #@author xkovacj00, Jakub Kováčik
 #@file gui_calculator.py
 #@brief This file contains Graphical User Interface for the calculator 
-#@TODO operations such as [-6(result of previous evaluation) + - 9] FAIL
+#@TODO FAIL: operations such as - 
+#                               - -2.2:if formula[0] == "+":       #when + at the beginning is indicating positive number, i remove the +IndexError: list index out of range
 #
 
 from tkinter import *
+from tkinter import messagebox
 import re
 from math_lib import *
 
@@ -15,6 +17,37 @@ root.title("Calculator")
 root.configure(bg = 'Black')
 
 valid_opperands = ["+", "-", "*", "/", "!", "^", "abs", "\u221A", "."]
+
+
+##  This functions opens a window with help for the user on how to use the calculator
+#
+def show_help():
+    help_text = (
+        "Welcome to the Calculator Help!\n\n"
+        "Supported operations:\n"
+        "  +   Addition\n"
+        "  -   Subtraction\n"
+        "  *   Multiplication\n"
+        "  /   Division\n"
+        "  ^   Exponentiation\n"
+        "  !   Factorial\n"
+        "  abs Absolute value\n"
+        "  \u221A  Root\n"
+        "  .   Decimal point\n\n"
+        "Buttons:\n"
+        "  AC  Clear all input\n"
+        "  LC  Clear last character\n"
+        "  =   Evaluate expression\n\n"
+        "Usage:\n"
+        "  +  N + M: N,M cam be negative or positive numbers\n"
+        "  -  N - M: N,M can be negative or positive numbers\n\n"
+        "Note:\n"
+        "- Floating point numbers must be written as '3.14', etc.\n"
+        " (Examples of invalid floating numbers: 1. , .2 , 1.-2)\n"
+        "- abs must be followed by a number or negative number.\n"
+        "- Do not use spaces between characters.\n"
+    )
+    messagebox.showinfo("Calculator Help", help_text)
 
 
 ##  This function splits user input into array
@@ -47,11 +80,10 @@ def getchar_from_button(character):
 #   @return result of the wohole formula  
 #
 def evaluate_formula(formula):
+    if len(formula) > 0:
+        if formula[0] == "+":       #when + at the beginning is indicating positive number, i remove the +
+            del formula[0]
 
-    if formula[0] == "+":       #when + at the beginning is indicating positive number, i remove the +
-        del formula[0]
-
-    
     indexes_to_delete = []
     numbers= []
     index_to_append = 0
@@ -164,14 +196,17 @@ def evaluate_formula(formula):
         del formula[indexes]        #exponent end
 
     for i,element in enumerate(formula):        #placement after factorial etc. because it would result in invalid   
-        if element == "-" and isinstance(formula[i + 1], int):
+        if element == "-" and (isinstance(formula[i + 1], int) or isinstance(formula[i + 1], float)):
             if i + 2 < len(formula) - 1:
                 if formula[i + 2] == "\u221A":
                     continue
             if i == 0:
                 negative_number = -formula[i + 1]
                 formula[i: i + 2] = [negative_number]
-            elif not i == 0:
+            if not i == 0:
+                if (formula[i - 1] == "+") or (formula[i - 1] == "*") or (formula[i - 1] == "/") or (formula[i - 1] == "-"):
+                    negative_number = -formula[i + 1]
+                    formula[i: i + 2] = [negative_number]
                 formula[i+1]=-(formula[i+1])
                 formula[i] = "+"
 
@@ -339,7 +374,7 @@ button_9 = Button(root, text = "9",**button_size_color, bg = "gray20", command= 
 
 
 button_mode = Button(root, text = "mode",**button_size_color, bg = "gray20")
-button_help = Button(root, text = "?",**button_size_color, bg = "gray20")
+button_help = Button(root, text = "?",**button_size_color, bg = "gray20", command = show_help)
 button_equal = Button(root, text = "=",**button_size_color, bg = "gray33", command= lambda: getchar_from_button("="))
 button_ac = Button(root, text = "AC",**button_size_color, bg = "gray33", command= lambda: getchar_from_button("AC"))
 button_lc = Button(root, text = "LC",**button_size_color, bg = "gray33", command= lambda: getchar_from_button("LC"))
