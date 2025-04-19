@@ -18,7 +18,6 @@ root.configure(bg = 'Black')
 
 valid_opperands = ["+", "-", "*", "/", "!", "^", "abs", "\u221A", "."]
 
-
 ##  This functions opens a window with help for the user on how to use the calculator
 #
 def show_help():
@@ -39,16 +38,23 @@ def show_help():
         "  LC  Clear last character\n"
         "  =   Evaluate expression\n\n"
         "Usage:\n"
-        "  +  N + M: N,M cam be negative or positive numbers\n"
-        "  -  N - M: N,M can be negative or positive numbers\n\n"
-        "Note:\n"
-        "- Floating point numbers must be written as '3.14', etc.\n"
-        " (Examples of invalid floating numbers: 1. , .2 , 1.-2)\n"
-        "- abs must be followed by a number or negative number.\n"
+        "  Addition  N + M : N, M can be negative or positive numbers\n"
+        "  Subtraction  N - M : N, M can be negative or positive numbers\n"
+        "  Multiplication  N * M : N, M can be negative or positive numbers\n"
+        "  Division  N / M : N, M can be negative or positive numbers (M ≠ 0)\n"
+        "  Factorial  N! : N must be a non-negative integer\n"
+        "  Power  N ^ M : N can be any number, M should be a non-negative integer\n"
+        "  Absolute value  abs N : Absolute value of N\n"
+        "  Root  N\u221AM : N is the degree of the root, M is the number to be rooted.\n"
+        "  Decimal number  . : Decimal numbers are supported.\n\n"
+        "Read before using:\n"
+        "- Decimal numbers must be written as '3.14', etc.\n"
+        " (Examples of invalid decimal numbers: 1. , .2 , 1.-2)\n"
+        "- To indicate a positive number, there's no need to use '+'. The calculator automatically treats numbers as positive unless stated otherwise.\n"
+        "- Absolute value must be followed by a number or negative number.\n"
         "- Do not use spaces between characters.\n"
     )
     messagebox.showinfo("Calculator Help", help_text)
-
 
 ##  This function splits user input into array
 #
@@ -75,6 +81,7 @@ def getchar_from_button(character):
             entry.delete(len(entry.get()) - 1, END)
         case _:
             entry.insert(END, character)
+
 ##  This function evaluates the formula
 #   @param formula array of nubers and opperands
 #   @return result of the wohole formula  
@@ -207,6 +214,7 @@ def evaluate_formula(formula):
                 if (formula[i - 1] == "+") or (formula[i - 1] == "*") or (formula[i - 1] == "/") or (formula[i - 1] == "-"):
                     negative_number = -formula[i + 1]
                     formula[i: i + 2] = [negative_number]
+                    continue
                 formula[i+1]=-(formula[i+1])
                 formula[i] = "+"
 
@@ -359,6 +367,7 @@ def validity_check(formula):
 
 entry = Entry(root, width = 20, borderwidth= 0, font = ("Arial", 20))
 entry.grid(row = 0, column = 0, columnspan = 4, rowspan= 2, padx= 10, pady= 10)
+entry.bind("<Return>", lambda event: getchar_from_button("="))
 button_size_color = {"padx": 0, "pady": 0, "width": 10, "fg": "white"}
 
 button_0 = Button(root, text = "0",**button_size_color, bg = "gray20", command= lambda: getchar_from_button(0))
