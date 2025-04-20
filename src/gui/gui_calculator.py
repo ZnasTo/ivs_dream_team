@@ -1,15 +1,13 @@
 ##
-#@author xkovacj00, Jakub Kováčik
-#@file gui_calculator.py
-#@brief This file contains Graphical User Interface for the calculator 
-#@TODO FAIL: operations such as - 
-#                               - -2.2:if formula[0] == "+":       #when + at the beginning is indicating positive number, i remove the +IndexError: list index out of range
+# @author xkovacj00, Jakub Kováčik
+# @file gui_calculator.py
+# @brief This file contains working Graphical User Interface for the calculator
 #
 
 from tkinter import *
 from tkinter import messagebox
 import re
-from math_lib import *
+import importlib
 
 root = Tk()
 
@@ -18,7 +16,7 @@ root.configure(bg = 'Black')
 
 valid_opperands = ["+", "-", "*", "/", "!", "^", "abs", "\u221A", "."]
 
-##  This functions opens a window with help for the user on how to use the calculator
+##  @brief This functions opens a window with help for the user on how to use the calculator
 #
 def show_help():
     help_text = (
@@ -38,43 +36,57 @@ def show_help():
         "  LC  Clear last character\n"
         "  =   Evaluate expression\n\n"
         "Usage:\n"
-        "  Addition  N + M : N, M can be negative or positive numbers\n"
-        "  Subtraction  N - M : N, M can be negative or positive numbers\n"
-        "  Multiplication  N * M : N, M can be negative or positive numbers\n"
-        "  Division  N / M : N, M can be negative or positive numbers (M ≠ 0)\n"
-        "  Factorial  N! : N must be a non-negative integer\n"
-        "  Power  N ^ M : N can be any number, M should be a non-negative integer\n"
-        "  Absolute value  abs N : Absolute value of N\n"
-        "  Root  N\u221AM : N is the degree of the root, M is the number to be rooted.\n"
-        "  Decimal number  . : Decimal numbers are supported.\n\n"
+        "  Addition  N + M : N, M can be negative or positive numbers.\n"
+        "  Subtraction  N - M : N, M can be negative or positive numbers.\n"
+        "  Multiplication  N * M : N, M can be negative or positive numbers.\n"
+        "  Division  N / M : N, M can be negative or positive numbers (M ≠ 0).\n"
+        "  Factorial  N! : N must be a non-negative integer.\n"
+        "  Power  N ^ M : N can be any number, M should be a non-negative integer.\n"
+        "  Absolute value  abs N : Absolute value of N.\n"
+        "  Root  N\u221AM : N (positive number) is the degree of the root, M is the number to be rooted.\n"
+        "  Decimal number  N.M : N can be can be negative or positive number, M should be non-negative integer.\n\n"
         "Read before using:\n"
+        "- Do not use spaces between characters.\n"
+        "- To indicate a positive number, there's no need to use '+'. The calculator automatically treats numbers as positive unless stated otherwise.\n"
+        "- Calculator supports keyboard inputs, simply click on the box, where numbers and opperations are displayed.\n"
         "- Decimal numbers must be written as '3.14', etc.\n"
         " (Examples of invalid decimal numbers: 1. , .2 , 1.-2)\n"
-        "- To indicate a positive number, there's no need to use '+'. The calculator automatically treats numbers as positive unless stated otherwise.\n"
         "- Absolute value must be followed by a number or negative number.\n"
-        "- Do not use spaces between characters.\n"
+        "- When Error occurs simply delete the message.\n"
+        "- Keyboard Shortcuts: Press enter to evaluate the formula, press backspace to delete last character.\n"
     )
     messagebox.showinfo("Calculator Help", help_text)
 
-##  This function splits user input into array
+##  @brief This function splits user input into array
 #
 #   @param input everything that user typed into calculator
-#   @return splitted array of opperands and numbers
+#   @return it returns either splitted array of opperands and numbers, or 1 in case of invalid input
 #
 def split_formula(input):
     pattern = r"(\d+|\^|abs|\.|\u221A|[+\-*/!])"        #splitting the array by these opperands
     numbers__and_opperands = re.findall(pattern, input)
+    joined = "".join(str(character) for character in numbers__and_opperands)        #joining splitted opperands, for validation
+
+    if joined != input:     #if the strings are not equal, it means there were invalid characters 
+        return 1
+    
     return numbers__and_opperands
 
-##  This function collets inputs as units
+##  @brief This function collets inputs as units
 #   @param character input of user
 #
 def getchar_from_button(character):
     match character:
         case "=":
-            result = count_everything(split_formula(entry.get()))
-            entry.delete(0, END)
-            entry.insert(0, result)
+            splitted_formula = split_formula(entry.get())
+            if splitted_formula == 1:
+                result = "ERROR: invalid input"
+                entry.delete(0, END)
+                entry.insert(0, result)
+            if not splitted_formula == 1:
+                result = count_everything(splitted_formula)
+                entry.delete(0, END)
+                entry.insert(0, result)
         case "AC":
             entry.delete(0, END)
         case "LC":
@@ -82,13 +94,15 @@ def getchar_from_button(character):
         case _:
             entry.insert(END, character)
 
-##  This function evaluates the formula
+##  @brief This function evaluates the formula
 #   @param formula array of nubers and opperands
-#   @return result of the wohole formula  
+#   @return formula, result of the whole formula, or error message
 #
 def evaluate_formula(formula):
+    math_module = importlib.import_module("math_lib")
+
     if len(formula) > 0:
-        if formula[0] == "+":       #when + at the beginning is indicating positive number, i remove the +
+        if formula[0] == "+":       #just in case when + at the beginning is indicating positive number, i remove the +
             del formula[0]
 
     indexes_to_delete = []
@@ -118,7 +132,7 @@ def evaluate_formula(formula):
         del formula[indexes]            #joining floating numbers end
     
 
-    indexes_to_delete = []       #abs start
+    indexes_to_delete = []       #start of abs
     negative_indexes_to_delete = []
     numbers= []
     negative_numbers= []
@@ -126,10 +140,10 @@ def evaluate_formula(formula):
         if element =="abs":
             if(formula[i + 1] == "-"):
                 negative_indexes_to_delete.extend([i, i + 1, i + 2])
-                negative_numbers.append(absolute_value(int(f"{formula[i+1]}{formula[i+2]}")))
+                negative_numbers.append(math_module.abs(float(f"{formula[i+1]}{formula[i+2]}")))
             else:
                 indexes_to_delete.extend([i, i+ 1])
-                numbers.append(absolute_value(int(formula[i+1])))
+                numbers.append(math_module.abs(float(formula[i+1])))
     
     numbers.reverse()
     index_to_append = 0
@@ -138,7 +152,7 @@ def evaluate_formula(formula):
         if (index_to_append % 2 == 0):
             del formula[indexes]
             if (((index_to_append/2) -1) == len(formula) - 2):
-                formula.append(numbers[int((index_to_append/2) -1)])
+                formula.append(numbers[float((index_to_append/2) -1)])
                 continue
             else:
                 formula.insert(indexes, numbers[int((index_to_append/2) -1)])        
@@ -153,20 +167,19 @@ def evaluate_formula(formula):
             del formula[indexes]
             formula.insert(indexes, negative_numbers[int((index_to_append/3) -1)])        
             continue      
-        del formula[indexes]            #abs end 
-
+        del formula[indexes]            #end of abs
 
     indexes_to_delete = []
     numbers= []
     index_to_append = 0
-    for i,element in enumerate(formula):        #factorial start
+    for i,element in enumerate(formula):        #start of factorial
         if element == "!":
             indexes_to_delete.extend([i - 1, i])
             number_for_factorial = formula [i - 1]
-            number_after_factorial = factorial(number_for_factorial)
+            number_after_factorial = math_module.factorial(number_for_factorial)
             if number_after_factorial == "Error!":
-                result = "ERROR: Invalid number(factorial)"
-                return result        #returning 1 after invalid input
+                result = "ERROR: Invalid number (factorial)"
+                return result
             numbers.append(number_after_factorial)
     numbers.reverse()       #the first number i will be adding is the last in the original array
     
@@ -176,10 +189,9 @@ def evaluate_formula(formula):
             del formula[indexes]
             formula.insert(indexes, numbers[int((index_to_append/2) -1)])        
             continue      
-        del formula[indexes]            #factorial end
+        del formula[indexes]            #end of factorial
     
-
-    indexes_to_delete = []          #exponent start
+    indexes_to_delete = []          #start of exponent
     numbers= []
     index_to_append = 0
     for i, element in enumerate(formula):
@@ -187,9 +199,9 @@ def evaluate_formula(formula):
             indexes_to_delete.extend([i - 1, i, i + 1])
             base = formula[i - 1]
             exponent = formula[i + 1]
-            number_after_exp = expon(base, exponent)
+            number_after_exp = math_module.expon(base, exponent)
             if number_after_exp == "Error!":
-                result = "ERROR: Invalid number(exponent)"
+                result = "ERROR: Invalid number (exponent)"
                 return 1
             numbers.append(number_after_exp)
     numbers.reverse()
@@ -200,7 +212,7 @@ def evaluate_formula(formula):
             del formula[indexes]
             formula.insert(indexes, numbers[int((index_to_append/3) -1)])        
             continue      
-        del formula[indexes]        #exponent end
+        del formula[indexes]        #end of exponent
 
     for i,element in enumerate(formula):        #placement after factorial etc. because it would result in invalid   
         if element == "-" and (isinstance(formula[i + 1], int) or isinstance(formula[i + 1], float)):
@@ -218,7 +230,7 @@ def evaluate_formula(formula):
                 formula[i+1]=-(formula[i+1])
                 formula[i] = "+"
 
-    indexes_to_delete = []          #root start
+    indexes_to_delete = []          #start of root
     numbers= []
     index_to_append = 0
     for i,element in enumerate(formula):        
@@ -228,9 +240,9 @@ def evaluate_formula(formula):
             indexes_to_delete.extend([i - 1, i, i + 1])
             radicant = formula [i + 1]
             root_index = formula [i - 1]
-            number_after_root = rootf(radicant, root_index)
+            number_after_root = math_module.root(radicant, root_index)
             if number_after_root == "Error!":
-                result = "ERROR: Invalid number(roof)"
+                result = "ERROR: Invalid number (roof)"
                 return result
             numbers.append(number_after_root)
     numbers.reverse()       #the first number i will be adding is the last in the original array
@@ -241,7 +253,7 @@ def evaluate_formula(formula):
             del formula[indexes]
             formula.insert(indexes, numbers[int((index_to_append/3) -1)])        
             continue      
-        del formula[indexes]            #root end    
+        del formula[indexes]            #end of root
 
 
     while "*" in formula:       #start of multiplication
@@ -251,7 +263,7 @@ def evaluate_formula(formula):
                     del formula[i + 1]
                 first_number = formula[i - 1]
                 second_number = formula[i + 1]
-                number_after_multiplication = multiplication(first_number, second_number)
+                number_after_multiplication = math_module.multiplication(first_number, second_number)
                 formula[i - 1:i + 2] = [number_after_multiplication]
                 break           #end of multiplication
             
@@ -262,34 +274,39 @@ def evaluate_formula(formula):
                     del formula[i + 1]
                 first_number = formula[i - 1]
                 second_number = formula[i + 1]
-                number_after_division = division(first_number, second_number)
+                number_after_division = math_module.division(first_number, second_number)
                 if number_after_division == "Error!":
-                    result = "ERROR: Invalid number(division)"
+                    result = "ERROR: Invalid number (division)"
                     return result
                 formula[i - 1:i + 2] = [number_after_division]
                 break       #end of division
-    print(f"{formula}")
-    while "+" in formula:       
+
+    while "+" in formula:       #start ot addition
         for i, element in enumerate(formula):
             if element == "+":
                 first_number = formula[i - 1]
                 second_number = formula[i + 1]
-                number_after_addition = addition(first_number, second_number)
+                number_after_addition = math_module.addition(first_number, second_number)
                 formula[i - 1:i + 2] = [number_after_addition]
-                break 
+                break       #end of addition
 
-    while "-" in formula:       
+    while "-" in formula:       #start of subtraction
         for i, element in enumerate(formula):
             if element == "-":
                 first_number = formula[i - 1]
                 second_number = formula[i + 1]
-                number_after_subtraction = subtraction(first_number, second_number)
+                number_after_subtraction = math_module.subtraction(first_number, second_number)
                 formula[i - 1:i + 2] = [number_after_subtraction]
-                break 
-    print(f"{formula}")
-    result = formula
-    return result
+                break       #end of subtraction
+    return formula
 
+
+
+
+## @brief This function decides, if it should count the formula or return error message
+#  @param formula the input
+#  @return it returns either evaluated formula or an error message
+#
 def count_everything(formula):
     valid_formula = validity_check(formula)
     if valid_formula!=0:
@@ -298,15 +315,15 @@ def count_everything(formula):
         result = evaluate_formula(formula)
     return result
 
-##  This function checks if the input is valid
+##  @brief This function checks if the input is valid
 #   @param formula the input string
 #   @return 0 if the input is valid
-#           1 if the input is invalid
+#           number other than 0 if the input is invalid
 #
 def validity_check(formula):
     for i, element in enumerate(formula):
         if not (element.isdigit() or element in valid_opperands):
-            return 1        #return is 1 if it is not valid
+            return 1
         match element:
             case ".":
                 if i == 0 or i == len(formula) -1:         #i is the current index in formula, if the last or first character is ., it is invalid 
@@ -359,7 +376,6 @@ def validity_check(formula):
             case"+":
                 if i == len(formula) - 1:
                     return 18
-                
             case "-":
                 if i == len(formula) - 1:
                     return 19
@@ -381,13 +397,11 @@ button_7 = Button(root, text = "7",**button_size_color, bg = "gray20", command= 
 button_8 = Button(root, text = "8",**button_size_color, bg = "gray20", command= lambda: getchar_from_button(8))
 button_9 = Button(root, text = "9",**button_size_color, bg = "gray20", command= lambda: getchar_from_button(9))
 
-
 button_mode = Button(root, text = "mode",**button_size_color, bg = "gray20")
 button_help = Button(root, text = "?",**button_size_color, bg = "gray20", command = show_help)
 button_equal = Button(root, text = "=",**button_size_color, bg = "gray33", command= lambda: getchar_from_button("="))
 button_ac = Button(root, text = "AC",**button_size_color, bg = "gray33", command= lambda: getchar_from_button("AC"))
 button_lc = Button(root, text = "LC",**button_size_color, bg = "gray33", command= lambda: getchar_from_button("LC"))
-
 
 button_float = Button(root, text = ".",**button_size_color, bg = "gray20", command= lambda: getchar_from_button("."))
 button_plus = Button(root, text = "+",**button_size_color, bg = "dark orange", command= lambda: getchar_from_button("+"))
@@ -399,12 +413,10 @@ button_fact = Button(root, text = "!",**button_size_color, bg = "dark orange", c
 button_exp = Button(root, text = "^",**button_size_color, bg = "dark orange", command= lambda: getchar_from_button("^"))
 button_div = Button(root, text = "/",**button_size_color, bg = "dark orange", command= lambda: getchar_from_button("/"))
 
-
 button_0.grid(row = 7, column = 1)
 button_1.grid(row = 6, column = 0)
 button_2.grid(row = 6, column = 1)
 button_3.grid(row = 6, column = 2)
-
 
 button_4.grid(row = 5, column = 0)
 button_5.grid(row = 5, column = 1)
@@ -413,7 +425,6 @@ button_6.grid(row = 5, column = 2)
 button_7.grid(row = 4, column = 0)
 button_8.grid(row = 4, column = 1)
 button_9.grid(row = 4, column = 2)
-
 
 button_mode.grid(row = 7, column = 0)
 button_float.grid(row = 7, column = 2)
@@ -433,6 +444,5 @@ button_ac.grid(row = 2, column = 0)
 button_fact.grid(row = 2, column = 1)
 button_exp.grid(row = 2, column = 2)
 button_div.grid(row = 2, column = 3)
-
 
 root.mainloop()
