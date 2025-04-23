@@ -1,4 +1,4 @@
-xlogin01 100 (základ GUI a základní mat. operace)
-xlogin02 100 (pokročilé mat. operace)
-xlogin03 90 (profiling, instalátor)
-xlogin04 110 (testy, dokumentace)
+xrecmaa00 100 (profiling, instalace, navod (od)instalace) 
+xkovacj00 100 (GUI, napoveda)
+xturcam00 100 (matemactika knihovna, makefile)
+xkubisa00 100 (testy, dokumentace)
