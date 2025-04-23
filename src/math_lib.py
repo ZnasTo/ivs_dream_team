@@ -1,6 +1,6 @@
 ## @author xturcam00 Martin Turčan
 #
-# File contains math library for calculator 
+# @brief File contains math library for calculator 
 
 
 ##
