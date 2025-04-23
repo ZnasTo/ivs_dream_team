@@ -1,7 +1,8 @@
-## @author xturcam00 Martin Turčan
-#
+## 
+# @author xturcam00, Martin Turčan
 # @brief File contains math library for calculator 
-
+# @file math_lib.py
+#
 
 ##
 # @brief Function adds 2 numbers
