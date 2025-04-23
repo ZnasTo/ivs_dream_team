@@ -1,7 +1,7 @@
 ## @author xturcam00 Martin Turčan
 #
 # @brief File contains math library for calculator 
-
+#
 
 ##
 # @brief Function adds 2 numbers
