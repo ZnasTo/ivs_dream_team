@@ -1,7 +1,7 @@
 ##  
 # @author xkubisa00, Aleš Kubiš
-# 
-#   This file contains tests for math library
+# @brief This file contains tests for math library
+# @file tests.py
 
 import unittest
 import importlib
