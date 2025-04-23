@@ -1,5 +1,5 @@
-#Sample Makefile
-## @author xturcam00 Martin Turčan
+##Sample Makefile
+# @author xturcam00 Martin Turčan
 #
 # File contains makefile
 
@@ -18,7 +18,7 @@ ALL_DIRS := $(shell dir /b /ad ..\)
 DELETE_FILES := $(filter-out $(KEEP_FILES), $(ALL_FILES))
 DELETE_DIRS := $(filter-out $(KEEP_DIRS), $(ALL_DIRS))
 
-.PHONY: clean test pack stddev
+.PHONY: clean test pack stddev run doc 
 
 test:
 	$(PC) $(TESTS)
@@ -38,8 +38,15 @@ $(BAT_FILE):
 	@echo off > $(BAT_FILE)
 	@echo python $(PYTHON_SCRIPT) %* >> $(BAT_FILE)
 
-pack:
-	powershell -Command "compress-archive -Path ".." -DestinationPath "..\fero""
+
+pack: clean
+    powershell -Command "compress-archive -Path ".." -DestinationPath "..\DreamTeam.zip""
+
+run: 
+    python gui_calculator.py
+
+doc:
+    doxygen Doxyfile
 
 
 
