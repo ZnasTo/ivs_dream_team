@@ -1,1 +1,21 @@
-tento soubor bude obsahovat rozdil mezi planem projektu a skutecnosti
+Vždy je první uvedeno předpokládané datum a za '-' se nachází kdy reálně byla tato část dokončena.
+Pokud ještě později byly udělány nějaké dodatěčné úpravy na vyžádání jiného člena týmu, tyto změny nejsou do tohoto data započítány. 
+Termíny:
+    17.3. testy - 13.3.
+    23.3. +,-,*,/ (matematická knihovna) - 15.3.
+    30.3. GUI zaklad - 24.3.
+    31.3. matematická knihovna (hotová) - 24.3.
+    2.4. makefile - 23.4.
+    6.4. profiling - 27.3.
+    13.4. GUI - komplet - 20.4.
+    16.4. instalace - 22.4.
+    19.4. napoveda - 20.4. 
+    20.4. navod k instalaci, dokumentace - 28.4.
+    27.4. odevzdani
+
+Porady:
+    X plán porada - 12.3.
+    X mini porada - 19.3.
+    2.4. takticka porada - 2.4
+    X třetí porada - 23.4.
+    27.4. finalni porada - 27.4.
