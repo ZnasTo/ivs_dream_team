@@ -1,5 +1,6 @@
 Vždy je první uvedeno předpokládané datum a za '-' se nachází kdy reálně byla tato část dokončena.
 Pokud ještě později byly udělány nějaké dodatěčné úpravy na vyžádání jiného člena týmu, tyto změny nejsou do tohoto data započítány. 
+
 Termíny:
     17.3. testy - 13.3.
     23.3. +,-,*,/ (matematická knihovna) - 15.3.
@@ -11,7 +12,7 @@ Termíny:
     16.4. instalace - 22.4.
     19.4. napoveda - 20.4. 
     20.4. navod k instalaci, dokumentace - 28.4.
-    27.4. odevzdani
+    27.4. odevzdani - 29.4
 
 Porady:
     X plán porada - 12.3.
